@@ -4,7 +4,7 @@ set -e #quit on error
 
 if [ $# -lt 2 ];
 then
-    echo extract-qt-installer qt_installer output_path
+    echo extract-qt-installer qt-installer output_path
     exit -1
 fi
 
@@ -12,55 +12,69 @@ export PATH=$PATH:$PWD
 export WORKDIR=$PWD
 INSTALLER=$1
 OUTPUT=$2
+SCRIPT="$(mktemp)"
 
-chmod u+x $1
-devtool --dump $OUTPUT $1
-
-mkdir -p $OUTPUT
-cd $OUTPUT
-
-extract() {
-    for file in $*
-    do
-#        echo $file
-#        7zr x $file | grep -v ^Extract    
-	echo Extract $file
-        7zr x $file >> /dev/null
-    done
+cat <<EOF > $SCRIPT
+function Controller()
+{
 }
 
-#files=`ls qt.*.android_*/*7z qt.*.gcc_64*/*7z`
-files=`ls metadata/qt*/*7z`
-extract $files
+Controller.prototype.WelcomePageCallback = function()
+{
+    gui.clickButton(buttons.NextButton);
+}
 
-#echo "Installed Toolchains"
-for d in $OUTPUT/*/*/bin/
-do 
-#    echo $d
+Controller.prototype.CredentialsPageCallback = function()
+{
+  gui.clickButton(buttons.CommitButton);
+}
 
-cat << EOF > $d/qt.conf
-[Paths]
-Prefix=..
-Plugins=../plugins
+Controller.prototype.ComponentSelectionPageCallback = function()
+{
+    gui.clickButton(buttons.NextButton);
+}
+
+Controller.prototype.IntroductionPageCallback = function()
+{
+    gui.clickButton(buttons.NextButton);
+}
+
+
+Controller.prototype.TargetDirectoryPageCallback = function()
+{
+     var widget = gui.currentPageWidget();
+
+     if (widget != null) {
+         widget.TargetDirectoryLineEdit.setText("$OUTPUT");
+     }
+
+     gui.clickButton(buttons.NextButton);
+
+}
+
+Controller.prototype.LicenseAgreementPageCallback = function() {
+     var widget = gui.currentPageWidget();
+
+     if (widget != null) {
+         widget.AcceptLicenseRadioButton.setChecked(true);
+     }
+
+     gui.clickButton(buttons.NextButton);
+
+}
+
+Controller.prototype.ReadyForInstallationPageCallback = function() {
+
+     gui.clickButton(buttons.CommitButton);
+}
+
+Controller.prototype.FinishedPageCallback = function() {
+
+     gui.clickButton(buttons.FinishButton);
+}
 EOF
-done 
 
-rm -rf $OUTPUT/qt*
+chmod u+x $1
+$1 --script $SCRIPT
 
-# Create environment file
 
-QT_VER=`ls $OUTPUT | grep [0-9]\.[0-9]`
-
-cat << EOF > $OUTPUT/env
-export QT_VER=$QT_VER
-export QTDIR=$OUTPUT/$QT_VER
-export PATH=$OUTPUT/$QT_VER/gcc_64/bin:\$PATH
-export LD_LIBRARY_PATH=$OUTPUT/$QT_VER/gcc_64/lib
-export QT_QPA_PLATFORM_PLUGIN_PATH=$OUTPUT/$QT_VER/gcc_64/plugins
-export QML2_IMPORT_PATH=$OUTPUT/$QT_VER/gcc_64/qml
-EOF
-
-echo # Installed Completed. Set the following environment variables to use it.
-cat $OUTPUT/env
-
-#echo The configuration file is saved to  $OUTPUT/env

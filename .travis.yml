@@ -13,14 +13,14 @@ script:
     - echo $PWD
     - export PATH=$PATH:$PWD/bin
     - wget --no-check-certificate -nv https://download.qt.io/official_releases/qt-installer-framework/2.0.1/qt-installer-framework-opensource-2.0.1-x64.run
-    - extract-ifw qt-installer-framework-opensource-2.0.1-x64.run $PWD/qtifw
-    - ls $PWD/qtifw
-    - export PATH=$PATH:$PWD/qtifw/bin
+    - extract-ifw qt-installer-framework-opensource-2.0.1-x64.run $PWD/QtIfw
+    - exit
     - wget --no-check-certificate -nv https://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
-    - extract-qt-installer qt-opensource-linux-x64-5.5.1.run $PWD/qt
-    - source $PWD/qt/env
+    - extract-qt-installer qt-opensource-linux-x64-5.5.1.run $PWD/Qt
+    - ls $PWD/Qt
+    - export PATH=$PATH:$PWD/Qt/5.5/gcc_64/bin
+    - which qmake
     - qpm install com.github.benlau.quickandroid
-    - find vendor
     - cd vendor/com/github/benlau/quickandroid/examples/quickandroidexample
     - qmake
     - make
