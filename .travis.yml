@@ -6,7 +6,8 @@ compiler:
 before_install:
     - sudo add-apt-repository --yes "deb http://download.opensuse.org/repositories/home:/benlau/xUbuntu_15.10 ./"
     - cat /etc/apt/sources.list
-    - sudo apt-get install --force-yes -qq qpm
+    - sudo apt-get update
+    - sudo apt-get install --force-yes -qq qpm p7zip
     - sh -e /etc/init.d/xvfb start
 script:
     - echo $PWD

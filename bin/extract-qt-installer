@@ -4,7 +4,7 @@ set -e #quit on error
 
 if [ $# -lt 2 ];
 then
-    echo extract-qt.sh qt_installer output_path
+    echo extract-qt-installer qt_installer output_path
     exit -1
 fi
 
@@ -14,7 +14,7 @@ INSTALLER=$1
 OUTPUT=$2
 
 chmod u+x $1
-$1 --dump-binary-data -o $OUTPUT > /dev/null
+devtool --dump $OUTPUT $1
 
 mkdir -p $OUTPUT
 cd $OUTPUT
@@ -29,7 +29,7 @@ extract() {
 }
 
 #files=`ls qt.*.android_*/*7z qt.*.gcc_64*/*7z`
-files=`ls qt*/*7z`
+files=`ls metadata/qt*/*7z`
 extract $files
 
 #echo "Installed Toolchains"
