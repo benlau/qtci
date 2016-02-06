@@ -17,6 +17,9 @@ SCRIPT="$(mktemp)"
 cat <<EOF > $SCRIPT
 function Controller()
 {
+	installer.installationFinished.connect(function() {
+	    gui.clickButton(buttons.NextButton);
+	});
 }
 
 Controller.prototype.WelcomePageCallback = function()
@@ -26,11 +29,15 @@ Controller.prototype.WelcomePageCallback = function()
 
 Controller.prototype.CredentialsPageCallback = function()
 {
-  gui.clickButton(buttons.CommitButton);
+	gui.clickButton(buttons.CommitButton);
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function()
 {
+	var widget = gui.currentPageWidget();
+	
+	// widget.deselectAll();
+
     gui.clickButton(buttons.NextButton);
 }
 
@@ -69,12 +76,14 @@ Controller.prototype.ReadyForInstallationPageCallback = function() {
 }
 
 Controller.prototype.FinishedPageCallback = function() {
-
-     gui.clickButton(buttons.FinishButton);
+	var widget = gui.currentPageWidget();
+	widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
+    gui.clickButton(buttons.FinishButton);
 }
+
 EOF
 
 chmod u+x $1
-$1 --script $SCRIPT
+$1 --script $SCRIPT --verbose
 
 
