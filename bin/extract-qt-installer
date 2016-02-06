@@ -1,4 +1,6 @@
 #!/bin/bash
+# QT-CI Project
+# https://github.com/benlau/qtci
 
 set -e #quit on error
 
