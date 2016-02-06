@@ -54,7 +54,8 @@ Controller.prototype.ReadyForInstallationPageCallback = function() {
 Controller.prototype.FinishedPageCallback = function() {
 
     gui.clickButton(buttons.FinishButton);
-}EOF
+}
+EOF
 
 chmod u+x $1
 $1 --script $SCRIPT
