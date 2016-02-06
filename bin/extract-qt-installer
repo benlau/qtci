@@ -1,0 +1,65 @@
+#!/bin/bash
+
+set -e #quit on error
+
+if [ $# -lt 2 ];
+then
+    echo extract-qt.sh qt_installer output_path
+    exit -1
+fi
+
+export PATH=$PATH:$PWD
+export WORKDIR=$PWD
+INSTALLER=$1
+OUTPUT=$2
+
+chmod u+x $1
+$1 --dump-binary-data -o $OUTPUT > /dev/null
+
+mkdir -p $OUTPUT
+cd $OUTPUT
+
+extract() {
+    for file in $*
+    do
+#        echo $file
+#        7zr x $file | grep -v ^Extract    
+        7zr x $file >> /dev/null
+    done
+}
+
+#files=`ls qt.*.android_*/*7z qt.*.gcc_64*/*7z`
+files=`ls qt*/*7z`
+extract $files
+
+#echo "Installed Toolchains"
+for d in $OUTPUT/*/*/bin/
+do 
+#    echo $d
+
+cat << EOF > $d/qt.conf
+[Paths]
+Prefix=..
+Plugins=../plugins
+EOF
+done 
+
+rm -rf $OUTPUT/qt*
+
+# Create environment file
+
+QT_VER=`ls $OUTPUT | grep [0-9]\.[0-9]`
+
+cat << EOF > $OUTPUT/env
+export QT_VER=$QT_VER
+export QTDIR=$OUTPUT/$QT_VER
+export PATH=$OUTPUT/$QT_VER/gcc_64/bin:\$PATH
+export LD_LIBRARY_PATH=$OUTPUT/$QT_VER/gcc_64/lib
+export QT_QPA_PLATFORM_PLUGIN_PATH=$OUTPUT/$QT_VER/gcc_64/plugins
+export QML2_IMPORT_PATH=$OUTPUT/$QT_VER/gcc_64/qml
+EOF
+
+echo # Installed Completed. Set the following environment variables to use it.
+cat $OUTPUT/env
+
+#echo The configuration file is saved to  $OUTPUT/env
