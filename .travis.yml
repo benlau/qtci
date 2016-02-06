@@ -20,6 +20,7 @@ script:
     - extract-qt-installer qt-opensource-linux-x64-5.5.1.run $PWD/qt
     - source $PWD/qt/env
     - qpm install com.github.benlau.quickandroid
-    - cd vendor/com/github/quickandroid/examples/quickandroidexample
+    - find vendor
+    - cd vendor/com/github/benlau/quickandroid/examples/quickandroidexample
     - qmake
     - make
