@@ -22,4 +22,4 @@ Extract installer of "Qt installer framework" to target path
 
 Example:
 
-	extract-qt-installer qt-installer-framework-opensource-1.5.0-x64.run ~/QtIfw
+	extract-ifw qt-installer-framework-opensource-1.5.0-x64.run ~/QtIfw
