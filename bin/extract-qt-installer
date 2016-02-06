@@ -84,6 +84,6 @@ Controller.prototype.FinishedPageCallback = function() {
 EOF
 
 chmod u+x $1
-$1 --script $SCRIPT --verbose
+$1 --script $SCRIPT
 
 
