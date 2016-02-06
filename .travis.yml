@@ -1,0 +1,16 @@
+language : cpp
+env:
+  - DISPLAY=:99.0
+compiler:
+  - gcc
+before_install:
+    - sudo add-apt-repository --yes "deb http://download.opensuse.org/repositories/home:/benlau/xUbuntu_15.10 ./"
+    - cat /etc/apt/sources.list
+    - sudo apt-get install --force-yes -qq qpm
+    - sh -e /etc/init.d/xvfb start
+script:
+    - echo $PWD
+    - export PATH=$PATH:$PWD/bin
+    - wget https://download.qt.io/official_releases/qt-installer-framework/2.0.1/qt-installer-framework-opensource-2.0.1-x64.run
+    - extract-ifw qt-installer-framework-opensource-2.0.1-x64.run $PWD/qtifw
+    - ls $PWD/qtifw
