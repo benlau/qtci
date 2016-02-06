@@ -24,6 +24,7 @@ extract() {
     do
 #        echo $file
 #        7zr x $file | grep -v ^Extract    
+	echo Extract $file
         7zr x $file >> /dev/null
     done
 }
