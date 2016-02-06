@@ -16,7 +16,7 @@ Example:
 
 	extract-qt-installer qt-opensource-linux-x64-android-5.5.1.run ~/Qt
 
-**(2) bin/extract-ifw - Extract**
+**(2) bin/extract-ifw**
 
 Extract installer of "Qt installer framework" to target path
 
