@@ -17,72 +17,65 @@ OUTPUT=$2
 SCRIPT="$(mktemp)"
 
 cat <<EOF > $SCRIPT
-function Controller()
-{
-	installer.installationFinished.connect(function() {
-	    gui.clickButton(buttons.NextButton);
-	});
+function Controller() {
+    installer.installationFinished.connect(function() {
+        gui.clickButton(buttons.NextButton);
+    });
 }
 
-Controller.prototype.WelcomePageCallback = function()
-{
+Controller.prototype.WelcomePageCallback = function() {
     gui.clickButton(buttons.NextButton);
 }
 
-Controller.prototype.CredentialsPageCallback = function()
-{
-	gui.clickButton(buttons.CommitButton);
+Controller.prototype.CredentialsPageCallback = function() {
+    gui.clickButton(buttons.CommitButton);
 }
 
-Controller.prototype.ComponentSelectionPageCallback = function()
-{
-	var widget = gui.currentPageWidget();
-	
-	// widget.deselectAll();
+Controller.prototype.ComponentSelectionPageCallback = function() {
+    var widget = gui.currentPageWidget();
+
+    // widget.deselectAll();
 
     gui.clickButton(buttons.NextButton);
 }
 
-Controller.prototype.IntroductionPageCallback = function()
-{
+Controller.prototype.IntroductionPageCallback = function() {
     gui.clickButton(buttons.NextButton);
 }
 
 
-Controller.prototype.TargetDirectoryPageCallback = function()
-{
-     var widget = gui.currentPageWidget();
+Controller.prototype.TargetDirectoryPageCallback = function() {
+    var widget = gui.currentPageWidget();
 
-     if (widget != null) {
-         widget.TargetDirectoryLineEdit.setText("$OUTPUT");
-     }
+    if (widget != null) {
+        widget.TargetDirectoryLineEdit.setText("$OUTPUT");
+    }
 
-     gui.clickButton(buttons.NextButton);
+    gui.clickButton(buttons.NextButton);
 
 }
 
 Controller.prototype.LicenseAgreementPageCallback = function() {
-     var widget = gui.currentPageWidget();
+    var widget = gui.currentPageWidget();
 
-     if (widget != null) {
-         widget.AcceptLicenseRadioButton.setChecked(true);
-     }
+    if (widget != null) {
+        widget.AcceptLicenseRadioButton.setChecked(true);
+    }
 
-     gui.clickButton(buttons.NextButton);
+    gui.clickButton(buttons.NextButton);
 
 }
 
 Controller.prototype.ReadyForInstallationPageCallback = function() {
 
-     gui.clickButton(buttons.CommitButton);
+    gui.clickButton(buttons.CommitButton);
 }
 
 Controller.prototype.FinishedPageCallback = function() {
-	var widget = gui.currentPageWidget();
-	widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
+    var widget = gui.currentPageWidget();
+    widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
     gui.clickButton(buttons.FinishButton);
 }
-
 EOF
 
 chmod u+x $1
