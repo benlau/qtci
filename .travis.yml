@@ -4,10 +4,9 @@ env:
 compiler:
   - gcc
 before_install:
-    - sudo add-apt-repository --yes "deb http://download.opensuse.org/repositories/home:/benlau/xUbuntu_15.10 ./"
     - cat /etc/apt/sources.list
     - sudo apt-get update
-    - sudo apt-get install --force-yes -qq qpm p7zip
+    - sudo apt-get install --force-yes -qq p7zip
     - sh -e /etc/init.d/xvfb start
 script:
     - echo $PWD
@@ -19,7 +18,7 @@ script:
     - ls $PWD/Qt
     - export PATH=$PWD/Qt/5.5/gcc_64/bin:$PATH
     - which qmake
-    - qpm install com.github.benlau.quickandroid
-    - cd vendor/com/github/benlau/quickandroid/examples/quickandroidexample
+    - git clone https://github.com/benlau/quickandroid.git
+    - cd quickandroid/examples/quickandroidexample
     - qmake
     - make
