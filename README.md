@@ -23,3 +23,12 @@ Extract installer of "Qt installer framework" to target path
 Example:
 
 	extract-ifw qt-installer-framework-opensource-1.5.0-x64.run ~/QtIfw
+
+**(3) bin/install-android-sdk**
+
+Download and install Android SDK
+
+Example:
+
+	install-android-sdk platform-tool,build-tools-20.0.0,android-19
+
