@@ -18,7 +18,7 @@ script:
     - ls $PWD/Qt
     - export PATH=$PWD/Qt/5.5/gcc_64/bin:$PATH
     - which qmake
-    - install-android-sdk
+    - install-android-sdk platform-tool,build-tools-20.0.0,android-19
     - git clone https://github.com/benlau/quickandroid.git
     - cd quickandroid/examples/quickandroidexample
     - qmake
