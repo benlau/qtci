@@ -1,0 +1,41 @@
+#!/bin/bash
+# QT-CI Project
+# License: Apache-2.0
+# https://github.com/benlau/qtci
+
+# Install Android SDK to current folder
+
+set -e #quit on error
+
+if [ $# -lt 1 ];
+then
+    echo install-android-sdk packages
+    echo
+    echo Example:
+    echo     install-android-sdk platform-tool,build-tools-20.0.0,android-19 
+    exit -1
+fi
+
+# e.g: platform-tool,build-tools-20.0.0,android-19 
+PACKAGES=$1
+
+echo Downloading Android SDK...
+wget -c -nv http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
+echo Downloading Android NDK...
+wget -c -nv http://dl.google.com/android/ndk/android-ndk-r10c-linux-x86_64.bin
+
+echo Extacting Android SDK...
+tar -zxf android-sdk_r23.0.2-linux.tgz
+
+echo Upgrading Android SDK...
+(sleep 5 ; while true ; do sleep 1 ; printf 'y\r\n' ; done ) | ./android-sdk-linux/tools/android update sdk -u -a -t $PACKAGES
+
+echo Installing Android NDK...
+(7zr x android-ndk-r10c-linux-x86_64.bin | grep -v ^Extract)
+
+echo Android SDK and NDK installed
+./android-sdk-linux/platform-tools/adb kill-server
+
+echo export PATH=$PWD/android-sdk-linux/tools:$PATH
+echo export ANDROID_NDK_ROOT=$PWD/android-ndk-r10c
+echo export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
