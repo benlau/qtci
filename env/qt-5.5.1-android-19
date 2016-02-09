@@ -4,7 +4,7 @@ echo Downloading Qt
 wget -c --no-check-certificate -nv https://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-android-5.5.1.run
 echo Installing Qt
 extract-qt-installer qt-opensource-linux-x64-android-5.5.1.run $PWD/Qt
-install-android-sdk platform-tool,build-tools-20.0.0,android-19
+install-android-sdk platform-tool,build-tools-22.0.1,android-19
 
 echo Create qt-5.5.1-android-19.env
 cat << EOF > qt-5.5.1-android-19.env
