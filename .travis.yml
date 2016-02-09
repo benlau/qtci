@@ -6,7 +6,7 @@ compiler:
 before_install:
     - cat /etc/apt/sources.list
     - sudo apt-get update
-    - sudo apt-get install --force-yes -qq p7zip
+    - sudo apt-get install --force-yes -qq p7zip openjdk-7-jsdk
     - sh -e /etc/init.d/xvfb start
 script:
     - export WORKDIR=$PWD
