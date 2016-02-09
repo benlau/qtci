@@ -11,14 +11,9 @@ before_install:
 script:
     - echo $PWD
     - export PATH=$PWD/bin:$PATH
-    - wget --no-check-certificate -nv https://download.qt.io/official_releases/qt-installer-framework/2.0.1/qt-installer-framework-opensource-2.0.1-x64.run
-    - extract-ifw qt-installer-framework-opensource-2.0.1-x64.run $PWD/QtIfw
-    - wget --no-check-certificate -nv https://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-5.5.1.run
-    - extract-qt-installer qt-opensource-linux-x64-5.5.1.run $PWD/Qt
-    - ls $PWD/Qt
-    - export PATH=$PWD/Qt/5.5/gcc_64/bin:$PATH
+    - ./env/qt-5.5.1-android-19
+    - source qt-5.5.1-android-19.env
     - which qmake
-    - install-android-sdk platform-tool,build-tools-20.0.0,android-19
     - git clone https://github.com/benlau/quickandroid.git
     - cd quickandroid/examples/quickandroidexample
     - qmake
