@@ -19,6 +19,7 @@ script:
     - source qt-5.5.1-android-19.env
     - find $ANDROID_SDK_ROOT/build-tools
     - cat -n $ANDROID_SDK_ROOT/tools/ant/build.xml
+    - $ANDROID_SDK_ROOT/build-tools/22.0.1/aidl
     - which qmake
     - git clone https://github.com/benlau/quickandroid.git
     - cd quickandroid/examples/quickandroidexample
