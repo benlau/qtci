@@ -21,6 +21,7 @@ PACKAGES=$1
 
 echo Downloading Android SDK...
 wget -c -nv http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
+
 echo Downloading Android NDK...
 wget -c -nv http://dl.google.com/android/ndk/android-ndk-r10c-linux-x86_64.bin
 
@@ -36,6 +37,7 @@ echo Installing Android NDK...
 echo Android SDK and NDK installed
 ./android-sdk-linux/platform-tools/adb kill-server
 
+echo
 echo export PATH=$PWD/android-sdk-linux/tools:$PATH
 echo export ANDROID_NDK_ROOT=$PWD/android-ndk-r10c
 echo export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
