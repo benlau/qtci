@@ -33,3 +33,11 @@ Example:
 
 	install-android-sdk platform-tool,build-tools-20.0.0,android-19
 
+Related Projects
+----------------
+
+ 1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
+ 2. [benlau/quickcross](https://github.com/benlau/quickcross) - QML Cross Platform Utility Library
+ 3. [benlau/qsyncable](https://github.com/benlau/qsyncable) - Synchronize data between models
+ 4. [benlau/testable](https://github.com/benlau/testable) - QML Unit Test Utilities
+ 5. [benlau/quickflux](https://github.com/benlau/quickflux) - Message Dispatcher / Queue for Qt/QML
