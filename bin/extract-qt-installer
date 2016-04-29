@@ -15,7 +15,7 @@ export PATH=$PATH:$PWD
 export WORKDIR=$PWD
 INSTALLER=$1
 OUTPUT=$2
-SCRIPT="$(mktemp)"
+SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
 
 cat <<EOF > $SCRIPT
 function Controller() {
@@ -81,5 +81,3 @@ EOF
 
 chmod u+x $1
 $1 --script $SCRIPT
-
-
