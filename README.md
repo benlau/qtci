@@ -33,6 +33,13 @@ Example:
 
 	install-android-sdk platform-tool,build-tools-20.0.0,android-19
 
+Preconfigured Environment
+-------------------------
+
+In the folder "env", it contains a set of script that could download and install specific Qt toolchains for different environment. (Include Android)
+
+Please feel free to modify and submit new environment scripts.
+
 Related Projects
 ----------------
 
