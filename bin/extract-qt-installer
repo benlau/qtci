@@ -24,7 +24,7 @@ function Controller() {
     });
 
     installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.Yes);
-    installer.setMessageBoxAutomaticAnswer("installationErrorWithRetry", QMessageBox.Retry);
+    installer.setMessageBoxAutomaticAnswer("installationErrorWithRetry", QMessageBox.Ignore);
 
 }
 
@@ -78,7 +78,11 @@ Controller.prototype.ReadyForInstallationPageCallback = function() {
 
 Controller.prototype.FinishedPageCallback = function() {
     var widget = gui.currentPageWidget();
-    widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
+
+    if (widget.LaunchQtCreatorCheckBoxForm) {
+        // No this form for minimal platform
+        widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
+    }
     gui.clickButton(buttons.FinishButton);
 }
 
