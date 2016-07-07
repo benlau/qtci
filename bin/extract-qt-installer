@@ -22,6 +22,10 @@ function Controller() {
     installer.installationFinished.connect(function() {
         gui.clickButton(buttons.NextButton);
     });
+
+    installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.Yes);
+    installer.setMessageBoxAutomaticAnswer("installationErrorWithRetry", QMessageBox.Retry);
+
 }
 
 Controller.prototype.WelcomePageCallback = function() {
@@ -77,7 +81,15 @@ Controller.prototype.FinishedPageCallback = function() {
     widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
     gui.clickButton(buttons.FinishButton);
 }
+
 EOF
 
+ARGS=""
+
+if [ -n "$VERBOSE" ]
+then
+  ARGS="-v"
+fi
+
 chmod u+x $1
-$1 --script $SCRIPT
+$1 $ARGS --script $SCRIPT
