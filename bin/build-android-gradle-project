@@ -1,0 +1,34 @@
+#!/bin/bash
+
+set -e
+
+if [ $# -lt 1 ];
+then
+    echo build-android-gradle-project
+    exit -1
+fi
+
+PRO=$1
+
+if [ -z "$QMAKE"]
+then
+
+  if [ -n "$QT_HOME" ]
+  then
+     QMAKE=$QT_HOME/android_armv7/bin/qmake
+     PATH=$QT_HOME/android_armv7/bin:$PATH
+  else
+     QMAKE=qmake
+  fi
+
+fi
+
+echo $QMAKE
+set -v
+$QMAKE $PRO -r -spec android-g++
+
+JSON=`ls *deployment-settings.json`
+make
+make install INSTALL_ROOT=`pwd`/android-build
+
+androiddeployqt --input $JSON --output `pwd`/android-build --deployment bundled --android-platform android-18 --gradle
