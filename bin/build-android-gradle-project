@@ -24,6 +24,13 @@ then
 fi
 
 echo $QMAKE
+
+if [ -n "$KEYSTORE" ] 
+then
+    echo keystore
+    DEPLOY_ARGS="--sign $KEYSTORE $KEYALIAS keystore --storepass $KEYPASS "
+fi
+
 set -v
 $QMAKE $PRO -r -spec android-g++
 
@@ -31,4 +38,5 @@ JSON=`ls *deployment-settings.json`
 make
 make install INSTALL_ROOT=`pwd`/android-build
 
-androiddeployqt --input $JSON --output `pwd`/android-build --deployment bundled --android-platform android-18 --gradle
+echo $DEPLOY_ARGS
+androiddeployqt --input $JSON --output `pwd`/android-build --deployment bundled --android-platform android-18 --gradle --no-gdbserver $DEPLOY_ARGS
