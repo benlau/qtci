@@ -40,6 +40,17 @@ In the folder "env", it contains a set of script that could download and install
 
 Please feel free to modify and submit new environment scripts.
 
+Example
+
+	apt-get install openjdk-8-jdk p7zip
+
+	source path.env #Add $PWD/bin and $PWD/env to $PATH
+
+	#Change to installation path
+
+	qt-5.5.1-android-19 # Install Qt 5.5.1 and Android SDK
+
+
 Related Projects
 ----------------
 

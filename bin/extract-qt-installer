@@ -96,4 +96,4 @@ then
 fi
 
 chmod u+x $1
-$1 $ARGS --script $SCRIPT
+QT_QPA_PLATFORM=minimal $1 $ARGS --script $SCRIPT
