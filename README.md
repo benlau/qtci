@@ -6,8 +6,8 @@ A set of scripts to install Qt/Android by official installer in Linux command li
 Check [.travis.yml](https://github.com/benlau/qtci/blob/master/.travis.yml) to see how it works. 
 It will demonstrate how to build a apk file using QT-CI scripts.
 
-Commands
---------
+Script
+------
 
 **(1) bin/extract-qt-installer**
 
@@ -32,6 +32,22 @@ Download and install Android SDK
 Example:
 
 	install-android-sdk platform-tool,build-tools-20.0.0,android-19
+
+**(4) bin/build-android-gradle-project 
+
+Build a Qt Android project and sign the APK
+
+Usage:
+
+	build-android-gradle-project pro
+	
+Required Environment Variables	
+
+	QT_HOME [Required] The home directory of installed Qt. (e.g ~/Qt/5.7)
+	KEYSTORE [Optional] The location of keystore. If it is set, it will be used to sign the created apk
+	KEYALIAS [Optional] The alias of the keystore
+	KEYPASS  [Optional] The password of keystore.
+
 
 Preconfigured Environment
 -------------------------
