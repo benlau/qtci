@@ -1,5 +1,5 @@
 # QT-CI
-A set of scripts to install Qt/Android by official installer in Linux command line environment (e.g travis/drone)
+This project collects a set of script for building Qt application for Android/iOS in command line environment.
 
 [![Build Status](https://travis-ci.org/benlau/qtci.svg?branch=master)](https://travis-ci.org/benlau/qtci)
 
