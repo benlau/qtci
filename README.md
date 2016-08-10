@@ -6,6 +6,21 @@ This project collects a set of script for building Qt application for Android/iO
 Check [.travis.yml](https://github.com/benlau/qtci/blob/master/.travis.yml) to see how it works. 
 It will demonstrate how to build a apk file using QT-CI scripts.
 
+Installation
+------------
+
+Since this project is a collection of script, and the script in bin folder do not have any dependence to each othter.
+It is not necessary to clone / download the whole repository into your build environmnet. 
+You may just copy the script you need from this repository. 
+
+Setup
+-----
+
+    git clone https://github.com/benlau/qtci.git
+    
+    source qtci/path.env #Add qtci/bin and qtci/env to $PATH
+   
+
 Script
 ------
 
@@ -33,7 +48,7 @@ Example:
 
 	install-android-sdk platform-tool,build-tools-20.0.0,android-19
 
-**(4) bin/build-android-gradle-project 
+**(4) bin/build-android-gradle-project**
 
 Build a Qt Android project and sign the APK
 
