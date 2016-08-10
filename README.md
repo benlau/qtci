@@ -72,7 +72,7 @@ Required Environment Variables
 
 Usage
 
-    increase-android-version-code increase_version_code_android AndroidManifest.xml
+    increase-android-version-code AndroidManifest.xml
 
 Given a AndroidManifest.xml file, it will increase the value of versionCode field by one.
 
