@@ -7,14 +7,14 @@ Check [.travis.yml](https://github.com/benlau/qtci/blob/master/.travis.yml) to s
 It will demonstrate how to build a apk file using QT-CI scripts.
 
 Installation
-------------
+============
 
 Since this project is a collection of script, and the script in bin folder do not have any dependence to each othter.
 It is not necessary to clone / download the whole repository into your build environmnet. 
 You may just copy the script you need from this repository. 
 
 Setup
------
+=====
 
     git clone https://github.com/benlau/qtci.git
     
@@ -22,9 +22,10 @@ Setup
    
 
 Script
-------
+======
 
 **(1) bin/extract-qt-installer**
+--------------------------------
 
 Extract installer of Qt to target path (for Qt 5.5 or above)
 
@@ -33,6 +34,7 @@ Example:
 	extract-qt-installer qt-opensource-linux-x64-android-5.5.1.run ~/Qt
 
 **(2) bin/extract-ifw**
+--------------------------------
 
 Extract installer of "Qt installer framework" to target path
 
@@ -41,6 +43,7 @@ Example:
 	extract-ifw qt-installer-framework-opensource-1.5.0-x64.run ~/QtIfw
 
 **(3) bin/install-android-sdk**
+--------------------------------
 
 Download and install Android SDK
 
@@ -49,6 +52,7 @@ Example:
 	install-android-sdk platform-tool,build-tools-20.0.0,android-19
 
 **(4) bin/build-android-gradle-project**
+--------------------------------
 
 Build a Qt Android project and sign the APK
 
@@ -63,9 +67,18 @@ Required Environment Variables
 	KEYALIAS [Optional] The alias of the keystore
 	KEYPASS  [Optional] The password of keystore.
 
+(5) bin/increase-android-version-code
+--------------------------------
+
+Usage
+
+    increase-android-version-code increase_version_code_android AndroidManifest.xml
+
+Given a AndroidManifest.xml file, it will increase the value of versionCode field by one.
 
 Preconfigured Environment
--------------------------
+=========================
+
 
 In the folder "env", it contains a set of script that could download and install specific Qt toolchains for different environment. (Include Android)
 
@@ -83,7 +96,7 @@ Example
 
 
 Related Projects
-----------------
+=================
 
  1. [benlau/quickpromise](https://github.com/benlau/quickpromise) - Promise library for QML
  2. [benlau/quickcross](https://github.com/benlau/quickcross) - QML Cross Platform Utility Library
