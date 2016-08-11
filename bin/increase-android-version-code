@@ -1,4 +1,7 @@
 #!/usr/bin/python
+# QT-CI Project
+# License: Apache-2.0
+# https://github.com/benlau/qtci
 # Based on the solution from http://stackoverflow.com/questions/6758685/auto-increment-version-code-in-android-app
 
 import sys

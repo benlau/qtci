@@ -1,4 +1,7 @@
 #!/bin/bash
+# QT-CI Project
+# License: Apache-2.0
+# https://github.com/benlau/qtci
 
 set -e
 
