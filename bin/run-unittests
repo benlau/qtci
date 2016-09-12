@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# QT-CI Project
+# License: Apache-2.0
+# https://github.com/benlau/qtci
+
+set -e
+
+if [ $# -lt 1 ]
+then
+    echo run-unittests pro
+    exit -1
+fi
+
+PRO=$1
+
+SRCDIR=`basename $PRO`
+
+if [ -f $SRCDIR/qpm.json ]
+then
+    (cd $SRCDIR;qpm install)
+fi
+
+TARGET=`cat $PRO | grep "TARGET *=" | sed "s/^TARGET *= *//"`
+
+echo $TARGET
+
+qmake $PRO
+make
+
+./$TARGET
