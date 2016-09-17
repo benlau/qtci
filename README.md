@@ -58,7 +58,7 @@ Build a Qt Android project and sign the APK
 
 Usage:
 
-	build-android-gradle-project pro
+	build-android-gradle-project project.pro
 	
 Required Environment Variables	
 
@@ -75,6 +75,15 @@ Usage
     increase-android-version-code AndroidManifest.xml
 
 Given a AndroidManifest.xml file, it will increase the value of versionCode field by one.
+
+(6) bin/run-unittests
+----------------------
+
+Usage
+    
+    run-unittests project.pro
+
+Build and run an unit test project in current folder. If qpm.json was found, it will call `qpm install` first.
 
 Preconfigured Environment
 =========================
