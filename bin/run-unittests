@@ -14,7 +14,7 @@ fi
 
 PRO=$1
 
-SRCDIR=`basename $PRO`
+SRCDIR=`dirname $PRO`
 
 if [ -f $SRCDIR/qpm.json ]
 then
