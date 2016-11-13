@@ -1,0 +1,13 @@
+#!/bin/sh
+
+echo Downloading Qt
+INSTALLER=qt-opensource-linux-x64-5.7.0.run
+ENVFILE=qt-5.7.env
+wget -c https://download.qt.io/archive/qt/5.7/5.7.0/qt-opensource-linux-x64-5.7.0.run
+echo Installing Qt
+extract-qt-installer $PWD/$INSTALLER $PWD/Qt
+
+echo Create $ENVFILE
+cat << EOF > $ENVFILE
+export PATH=$PWD/Qt/5.7/gcc_64/bin:$PATH
+EOF
