@@ -3,23 +3,23 @@ This project collects a set of script for building Qt application for Android/iO
 
 [![Build Status](https://travis-ci.org/benlau/qtci.svg?branch=master)](https://travis-ci.org/benlau/qtci)
 
-Check [.travis.yml](https://github.com/benlau/qtci/blob/master/.travis.yml) to see how it works. 
+Check [.travis.yml](https://github.com/benlau/qtci/blob/master/.travis.yml) to see how it works.
 It will demonstrate how to build a apk file using QT-CI scripts.
 
 Installation
 ============
 
 Since this project is a collection of script, and the script in bin folder do not have any dependence to each othter.
-It is not necessary to clone / download the whole repository into your build environmnet. 
-You may just copy the script you need from this repository. 
+It is not necessary to clone / download the whole repository into your build environmnet.
+You may just copy the script you need from this repository.
 
 Setup
 =====
 
     git clone https://github.com/benlau/qtci.git
-    
+
     source qtci/path.env #Add qtci/bin and qtci/env to $PATH
-   
+
 
 Script
 ======
@@ -59,8 +59,8 @@ Build a Qt Android project and sign the APK
 Usage:
 
 	build-android-gradle-project project.pro
-	
-Required Environment Variables	
+
+Required Environment Variables
 
 	QT_HOME [Required] The home directory of installed Qt. (e.g ~/Qt/5.7)
 	KEYSTORE [Optional] The location of keystore. If it is set, it will be used to sign the created apk
@@ -80,16 +80,16 @@ Given a AndroidManifest.xml file, it will increase the value of versionCode fiel
 ----------------------
 
 Usage
-    
+
     run-unittests project.pro
 
 Build and run an unit test project in current folder. If qpm.json was found, it will call `qpm install` first.
 
-Preconfigured Environment
-=========================
+Recipes
+=======
 
 
-In the folder "env", it contains a set of script that could download and install specific Qt toolchains for different environment. (Include Android)
+In the folder "recipes", it contains a set of script that could download and install specific Qt toolchains for different environment. (Include Android)
 
 Please feel free to modify and submit new environment scripts.
 
@@ -97,7 +97,7 @@ Example
 
 	apt-get install openjdk-8-jdk p7zip
 
-	source path.env #Add $PWD/bin and $PWD/env to $PATH
+	source path.env #Add $PWD/bin and $PWD/recipes to $PATH
 
 	#Change to installation path
 

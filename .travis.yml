@@ -14,7 +14,7 @@ script:
     - export WORKDIR=$PWD
     - echo $PWD
     - export PATH=$PWD/bin:$PATH
-    - ./env/qt-5.5.1-android-19
+    - ./receipes/qt-5.5.1-android-19
     - cat qt-5.5.1-android-19.env
     - source qt-5.5.1-android-19.env
     - which qmake
