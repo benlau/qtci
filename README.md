@@ -91,7 +91,7 @@ Recipes
 
 In the folder "recipes", it contains a set of script that could download and install specific Qt toolchains for different environment. (Include Android)
 
-Please feel free to modify and submit new environment scripts.
+Please feel free to modify and submit new recipe.
 
 Example
 
@@ -102,6 +102,8 @@ Example
 	#Change to installation path
 
 	qt-5.5.1-android-19 # Install Qt 5.5.1 and Android SDK
+	
+	source qt-5.5.1-android-19.env # Add installed Qt path to $PATH
 
 
 Related Projects
