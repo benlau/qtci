@@ -13,8 +13,8 @@ before_install:
 script:
     - export WORKDIR=$PWD
     - echo $PWD
-    - export PATH=$PWD/bin:$PATH
-    - ./receipes/qt-5.5.1-android-19
+    - source path.env
+    - qt-5.5.1-android-19
     - cat qt-5.5.1-android-19.env
     - source qt-5.5.1-android-19.env
     - which qmake
