@@ -1,0 +1,20 @@
+#!/bin/sh
+
+echo Downloading Qt
+wget -c --no-check-certificate -nv https://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-android-5.5.1.run
+echo Installing Qt
+extract-qt-installer qt-opensource-linux-x64-android-5.5.1.run $PWD/Qt
+
+#Travis do not come with NDK
+echo Installing NDK
+wget -c -nv http://dl.google.com/android/ndk/android-ndk-r10c-linux-x86_64.bin
+(7zr x android-ndk-r10c-linux-x86_64.bin | grep -v ^Extract)
+
+echo Create qt-5.5.1-android-travis.env
+cat << EOF > qt-5.5.1-android-travis.env
+export QT_ROOT=$PWD/Qt
+export QT_HOME=$PWD/Qt/5.5
+export ANDROID_SDK_ROOT=/usr/local/android-sdk 
+export ANDROID_NDK_ROOT=$PWD/android-ndk-r10c
+export PATH=$PWD/Qt/5.5/android_armv7/bin:$PWD/android-sdk-linux/tools:$PATH
+EOF
