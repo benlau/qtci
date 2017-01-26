@@ -18,7 +18,7 @@ Setup
 
     git clone https://github.com/benlau/qtci.git
 
-    source qtci/path.env #Add qtci/bin and qtci/env to $PATH
+    source qtci/path.env #Add qtci/bin and qtci/recipes to $PATH
 
 
 Script
