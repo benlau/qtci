@@ -106,6 +106,11 @@ Example
 	source qt-5.5.1-android-19.env # Add installed Qt path to $PATH
 
 
+Reference
+=========
+
+ 1. [Andrew's Articles - Continuous deployment for Qt applications](http://andrewdolby.com/articles/2016/continuous-deployment-for-qt-applications/)
+
 Related Projects
 =================
 
