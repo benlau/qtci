@@ -109,6 +109,7 @@ Example
 Reference
 =========
 
+ 1. [Continuous distribution for Qt applications on desktop and mobile](http://www.slidedeck.io/lasconic/qtci-qtcon2016)
  1. [Andrew's Articles - Continuous deployment for Qt applications](http://andrewdolby.com/articles/2016/continuous-deployment-for-qt-applications/)
 
 Related Projects
