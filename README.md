@@ -66,6 +66,7 @@ Required Environment Variables
 	KEYSTORE [Optional] The location of keystore. If it is set, it will be used to sign the created apk
 	KEYALIAS [Optional] The alias of the keystore
 	KEYPASS  [Optional] The password of keystore.
+        ANDROID_TARGET_SDK_VERSION [Optional] Target Android SDK version. The default value is "19"
 
 (5) bin/increase-android-version-code
 --------------------------------
