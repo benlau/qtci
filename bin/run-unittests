@@ -27,5 +27,6 @@ echo $TARGET
 
 qmake $PRO
 make
+echo "Build Completed"
 
 ./$TARGET
