@@ -25,7 +25,7 @@ TARGET=`cat $PRO | grep "TARGET *=" | sed "s/^TARGET *= *//"`
 
 echo $TARGET
 
-qmake $PRO
+qmake CONFIG+=debug $PRO
 make
 echo "Build Completed"
 
