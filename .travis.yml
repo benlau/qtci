@@ -17,7 +17,6 @@ script:
     - qt-5.5.1-android-19
     - cat qt-5.5.1-android-19.env
     - ls $QT_ROOT
-    - find $QT_HOME
     - source qt-5.5.1-android-19.env
     - which qmake
     - git clone https://github.com/benlau/quickandroid.git
