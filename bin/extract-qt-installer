@@ -16,8 +16,10 @@ export WORKDIR=$PWD
 INSTALLER=$1
 OUTPUT=$2
 SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
+PACKAGES=$QT_CI_PACKAGES
 
 cat <<EOF > $SCRIPT
+
 function Controller() {
     installer.installationFinished.connect(function() {
         gui.clickButton(buttons.NextButton);
@@ -37,9 +39,20 @@ Controller.prototype.CredentialsPageCallback = function() {
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
+
+    function trim(str) {
+        return str.replace(/^ +/,"").replace(/ *$/,"");
+    }
+
     var widget = gui.currentPageWidget();
 
-    // widget.deselectAll();
+    var packages = trim("$PACKAGES").split(",");
+    if (packages.length > 0) {
+        widget.deselectAll();
+        for (var i in packages) {
+	    widget.selectComponent(trim(packages[i]));
+        }
+    }
 
     gui.clickButton(buttons.NextButton);
 }
