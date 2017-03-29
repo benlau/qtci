@@ -50,7 +50,7 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
     if (packages.length > 0 && packages[0] !== "") {
         widget.deselectAll();
         for (var i in packages) {
-            var pkg = (trim(packages[i]);
+            var pkg = trim(packages[i]);
 	    console.log("Select " + pkg);
 	    widget.selectComponent(pkg);
         }
