@@ -47,10 +47,12 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
     var widget = gui.currentPageWidget();
 
     var packages = trim("$PACKAGES").split(",");
-    if (packages.length > 0) {
+    if (packages.length > 0 && packages[0] !== "") {
         widget.deselectAll();
         for (var i in packages) {
-	    widget.selectComponent(trim(packages[i]));
+            var pkg = (trim(packages[i]);
+	    console.log("Select " + pkg);
+	    widget.selectComponent(pkg);
         }
     }
 
