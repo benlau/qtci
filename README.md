@@ -33,6 +33,15 @@ Example:
 
 	extract-qt-installer qt-opensource-linux-x64-android-5.5.1.run ~/Qt
 
+**Remarks: The installation path must be absolute path**
+
+Environment Variables
+
+	VERBOSE [Optional] Set to "true" will enable VERBOSE output
+	QT_CI_PAGEAGES [Optional] Select the components to be installed instead of using default (eg. QT_CI_PAGEAGES="qt.59.gcc_64")
+
+
+
 **(2) bin/extract-ifw**
 --------------------------------
 

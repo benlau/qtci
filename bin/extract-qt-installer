@@ -31,6 +31,7 @@ function Controller() {
 }
 
 Controller.prototype.WelcomePageCallback = function() {
+    console.log("Welcome Page");
     gui.clickButton(buttons.NextButton);
 }
 
@@ -63,12 +64,14 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
 }
 
 Controller.prototype.IntroductionPageCallback = function() {
-    console.log("Skip introduction");
+    console.log("Introduction Page");
+    console.log("Retrieving meta information from remote repository");
     gui.clickButton(buttons.NextButton);
 }
 
 
 Controller.prototype.TargetDirectoryPageCallback = function() {
+    console.log("Set target installation page: $OUTPUT");
     var widget = gui.currentPageWidget();
 
     if (widget != null) {
