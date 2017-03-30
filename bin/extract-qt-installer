@@ -39,6 +39,7 @@ Controller.prototype.CredentialsPageCallback = function() {
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
+    console.log("Select components");
 
     function trim(str) {
         return str.replace(/^ +/,"").replace(/ *$/,"");
@@ -54,12 +55,15 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
 	    console.log("Select " + pkg);
 	    widget.selectComponent(pkg);
         }
+    } else {
+       console.log("Use default component list");
     }
 
     gui.clickButton(buttons.NextButton);
 }
 
 Controller.prototype.IntroductionPageCallback = function() {
+    console.log("Skip introduction");
     gui.clickButton(buttons.NextButton);
 }
 
@@ -76,6 +80,7 @@ Controller.prototype.TargetDirectoryPageCallback = function() {
 }
 
 Controller.prototype.LicenseAgreementPageCallback = function() {
+    console.log("Accept license agreement");
     var widget = gui.currentPageWidget();
 
     if (widget != null) {
@@ -87,7 +92,7 @@ Controller.prototype.LicenseAgreementPageCallback = function() {
 }
 
 Controller.prototype.ReadyForInstallationPageCallback = function() {
-
+    console.log("Ready to install");
     gui.clickButton(buttons.CommitButton);
 }
 
