@@ -11,6 +11,8 @@ then
     exit -1
 fi
 
+JARSIGNER=`which jarsigner`
+
 PRO=$1
 
 if [ -z "$QMAKE"]
@@ -35,15 +37,36 @@ echo $QMAKE
 
 if [ -n "$KEYSTORE" ] 
 then
-    echo keystore
+    echo "Key store file: $KEYSTORE"  
+    if [ ! -f "$KEYSTORE" ]
+    then
+        echo "Key store file not found!";
+        exit -1
+    fi
+
+    if [ ! -z "$KEYPASS"]
+    then
+       echo "KEYPASS is absent"
+       exit -1
+    fi
     DEPLOY_ARGS="--sign $KEYSTORE $KEYALIAS keystore --storepass $KEYPASS "
 fi
 
 set -v
 $QMAKE $PRO -r -spec android-g++
 
+ANDROID_BUILD_PATH=`pwd`/android-build
+
 JSON=`ls *deployment-settings.json`
 make
-make install INSTALL_ROOT=`pwd`/android-build
+make install INSTALL_ROOT=${ANDROID_BUILD_PATH}
 
 androiddeployqt --input $JSON --output `pwd`/android-build --deployment bundled --android-platform android-${ANDROID_TARGET_SDK_VERSION} --gradle --no-gdbserver $DEPLOY_ARGS
+
+APK=${ANDROID_BUILD_PATH}/build/outputs/apk/android-build-debug.apk
+
+if [ ! -z "$JARSIGNER" ]
+then 
+     $JARSIGNER -verify -verbose -certs $APK
+
+fi
