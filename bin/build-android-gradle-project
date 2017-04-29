@@ -44,12 +44,12 @@ then
         exit -1
     fi
 
-    if [ ! -z "$KEYPASS"]
+    if [ -z "$KEYPASS" ]
     then
        echo "KEYPASS is absent"
        exit -1
     fi
-    DEPLOY_ARGS="--sign $KEYSTORE $KEYALIAS keystore --storepass $KEYPASS "
+    DEPLOY_ARGS="--sign $KEYSTORE $KEYALIAS --storepass $KEYPASS "
 fi
 
 set -v
@@ -61,12 +61,18 @@ JSON=`ls *deployment-settings.json`
 make
 make install INSTALL_ROOT=${ANDROID_BUILD_PATH}
 
-androiddeployqt --input $JSON --output `pwd`/android-build --deployment bundled --android-platform android-${ANDROID_TARGET_SDK_VERSION} --gradle --no-gdbserver $DEPLOY_ARGS
+androiddeployqt --verbose --input $JSON --output `pwd`/android-build --deployment bundled --android-platform android-${ANDROID_TARGET_SDK_VERSION} --gradle --no-gdbserver $DEPLOY_ARGS
 
+APK=${ANDROID_BUILD_PATH}/build/outputs/apk/android-build-release-signed.apk
+
+if [ ! -f $APK ]
+then
 APK=${ANDROID_BUILD_PATH}/build/outputs/apk/android-build-debug.apk
+fi
+
+echo "Output APK: $APK"
 
 if [ ! -z "$JARSIGNER" ]
 then 
      $JARSIGNER -verify -verbose -certs $APK
-
 fi
