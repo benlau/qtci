@@ -1,0 +1,19 @@
+#!/bin/bash
+# QT-CI Project
+# License: Apache-2.0
+# https://github.com/benlau/qtci
+
+set -e
+
+if [ $# -lt 1 ];
+then
+    echo $0 Info.plist
+    exit -1
+fi
+
+
+INFOPLIST_FILE=$1
+buildNumber=`/usr/libexec/PlistBuddy -c "Print CFBundleVersion" $INFOPLIST_FILE`
+buildNumber=$(($buildNumber+1))
+/usr/libexec/PlistBuddy -c "Set CFBundleVersion $buildNumber" $INFOPLIST_FILE
+
