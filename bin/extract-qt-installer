@@ -18,7 +18,38 @@ OUTPUT=$2
 SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
 PACKAGES=$QT_CI_PACKAGES
 
+if [[ ! "${OUTPUT:0:1}" = "/" ]] 
+then 
+    echo output path must be an absolute path
+    exit -1
+fi
+
 cat <<EOF > $SCRIPT
+
+function abortInstaller()
+{
+    installer.setDefaultPageVisible(QInstaller.Introduction, false);
+    installer.setDefaultPageVisible(QInstaller.TargetDirectory, false);
+    installer.setDefaultPageVisible(QInstaller.ComponentSelection, false);
+    installer.setDefaultPageVisible(QInstaller.ReadyForInstallation, false);
+    installer.setDefaultPageVisible(QInstaller.StartMenuSelection, false);
+    installer.setDefaultPageVisible(QInstaller.PerformInstallation, false);
+    installer.setDefaultPageVisible(QInstaller.LicenseCheck, false);
+
+    var abortText = "<font color='red' size=3>" + qsTr("Installation failed:") + "</font>";
+
+    var error_list = installer.value("component_errors").split(";;;");
+    abortText += "<ul>";
+    // ignore the first empty one
+    for (var i = 0; i < error_list.length; ++i) {
+        if (error_list[i] !== "") {
+            console.log(error_list[i]);
+            abortText += "<li>" + error_list[i] + "</li>"
+        }
+    }
+    abortText += "</ul>";
+    installer.setValue("FinishedText", abortText);
+}
 
 function Controller() {
     installer.installationFinished.connect(function() {
@@ -27,7 +58,6 @@ function Controller() {
 
     installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.Yes);
     installer.setMessageBoxAutomaticAnswer("installationErrorWithRetry", QMessageBox.Ignore);
-
 }
 
 Controller.prototype.WelcomePageCallback = function() {
@@ -53,8 +83,8 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
         widget.deselectAll();
         for (var i in packages) {
             var pkg = trim(packages[i]);
-	    console.log("Select " + pkg);
-	    widget.selectComponent(pkg);
+	        console.log("Select " + pkg);
+	        widget.selectComponent(pkg);
         }
     } else {
        console.log("Use default component list");
@@ -77,9 +107,8 @@ Controller.prototype.TargetDirectoryPageCallback = function() {
     if (widget != null) {
         widget.TargetDirectoryLineEdit.setText("$OUTPUT");
     }
-
+    
     gui.clickButton(buttons.NextButton);
-
 }
 
 Controller.prototype.LicenseAgreementPageCallback = function() {
@@ -111,7 +140,7 @@ Controller.prototype.FinishedPageCallback = function() {
 
 EOF
 
-ARGS=""
+ARGS="--no-force-installations"
 
 if [ -n "$VERBOSE" ]
 then
