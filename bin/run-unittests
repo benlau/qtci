@@ -23,10 +23,18 @@ fi
 
 TARGET=`cat $PRO | grep "TARGET *=" | sed "s/^TARGET *= *//"`
 
-echo $TARGET
+echo "Target executable: $TARGET"
 
 qmake CONFIG+=debug $PRO
+if [ -z "${QT_CI_SILENT}" ]
+then
 make
+else
+
+echo "Compiling..."
+make > /dev/null
+
+fi
 echo "Build Completed"
 
 ./$TARGET
