@@ -60,7 +60,6 @@ function Controller() {
     installer.installationFinished.connect(function() {
         gui.clickButton(buttons.NextButton);
     });
-
     installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.Yes);
     installer.setMessageBoxAutomaticAnswer("installationErrorWithRetry", QMessageBox.Ignore);
 }
@@ -167,5 +166,5 @@ if [ -n "$VERBOSE" ]
 then
     QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT
 else
-    QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT | grep QTCI
+    QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT | grep "\(QTCI\|operation\)"
 fi
