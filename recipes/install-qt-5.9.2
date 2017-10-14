@@ -4,7 +4,7 @@ echo Downloading Qt
 INSTALLER=qt-opensource-linux-x64-5.9.2.run
 ENVFILE=qt-5.9.2.env
 export QT_CI_PACKAGES="qt.592.gcc_64,qt.592.qtwebengine" 
-wget -c https://download.qt.io/archive/qt/5.9/5.9.2/qt-opensource-linux-x64-5.9.2.run
+wget -q -c https://download.qt.io/archive/qt/5.9/5.9.2/qt-opensource-linux-x64-5.9.2.run
 echo Installing Qt
 
 echo "Selected ${QT_CI_PACKAGES} packages"
