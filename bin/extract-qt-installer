@@ -43,12 +43,17 @@ function abortInstaller()
     // ignore the first empty one
     for (var i = 0; i < error_list.length; ++i) {
         if (error_list[i] !== "") {
-            console.log(error_list[i]);
+            log(error_list[i]);
             abortText += "<li>" + error_list[i] + "</li>"
         }
     }
     abortText += "</ul>";
     installer.setValue("FinishedText", abortText);
+}
+
+function log() {
+    var msg = ["QTCI: "].concat([].slice.call(arguments));
+    console.log(msg.join(" "));
 }
 
 function Controller() {
@@ -61,7 +66,7 @@ function Controller() {
 }
 
 Controller.prototype.WelcomePageCallback = function() {
-    console.log("Welcome Page");
+    log("Welcome Page");
     gui.clickButton(buttons.NextButton);
 }
 
@@ -70,7 +75,15 @@ Controller.prototype.CredentialsPageCallback = function() {
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
-    console.log("Select components");
+
+    var components = installer.components();
+    log("Available components: " + components.length);
+
+    for (var i = 0 ; i < components.length ;i++) {
+        log(components[i].name);
+    }
+
+    log("Select components");
 
     function trim(str) {
         return str.replace(/^ +/,"").replace(/ *$/,"");
@@ -83,25 +96,25 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
         widget.deselectAll();
         for (var i in packages) {
             var pkg = trim(packages[i]);
-	        console.log("Select " + pkg);
+	        log("Select " + pkg);
 	        widget.selectComponent(pkg);
         }
     } else {
-       console.log("Use default component list");
+       log("Use default component list");
     }
 
     gui.clickButton(buttons.NextButton);
 }
 
 Controller.prototype.IntroductionPageCallback = function() {
-    console.log("Introduction Page");
-    console.log("Retrieving meta information from remote repository");
+    log("Introduction Page");
+    log("Retrieving meta information from remote repository");
     gui.clickButton(buttons.NextButton);
 }
 
 
 Controller.prototype.TargetDirectoryPageCallback = function() {
-    console.log("Set target installation page: $OUTPUT");
+    log("Set target installation page: $OUTPUT");
     var widget = gui.currentPageWidget();
 
     if (widget != null) {
@@ -112,7 +125,7 @@ Controller.prototype.TargetDirectoryPageCallback = function() {
 }
 
 Controller.prototype.LicenseAgreementPageCallback = function() {
-    console.log("Accept license agreement");
+    log("Accept license agreement");
     var widget = gui.currentPageWidget();
 
     if (widget != null) {
@@ -124,7 +137,12 @@ Controller.prototype.LicenseAgreementPageCallback = function() {
 }
 
 Controller.prototype.ReadyForInstallationPageCallback = function() {
-    console.log("Ready to install");
+    log("Ready to install");
+    gui.clickButton(buttons.CommitButton);
+}
+
+Controller.prototype.PerformInstallationPageCallback = function() {
+    log("PerformInstallationPageCallback");
     gui.clickButton(buttons.CommitButton);
 }
 
@@ -140,12 +158,14 @@ Controller.prototype.FinishedPageCallback = function() {
 
 EOF
 
-ARGS="--no-force-installations"
+ARGS="-v"
+
+chmod u+x $1
+
 
 if [ -n "$VERBOSE" ]
 then
-  ARGS="-v"
+    QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT
+else
+    QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT | grep QTCI
 fi
-
-chmod u+x $1
-QT_QPA_PLATFORM=minimal $1 $ARGS --script $SCRIPT
