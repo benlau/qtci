@@ -28,13 +28,11 @@ echo "Target executable: $TARGET"
 qmake CONFIG+=debug $PRO
 if [ -z "${QT_CI_SILENT}" ]
 then
-make
+    make
 else
-
-echo "Compiling..."
-make > /dev/null
-
+    echo "Compiling..."
+    make > /dev/null
 fi
 echo "Build Completed"
 
-./$TARGET
+QT_QPA_PLATFORM=minimal ./$TARGET
