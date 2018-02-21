@@ -24,6 +24,15 @@ Then just run scritp "recipes/install-qt" with desiered verion of Qt
 Example:
 
 	bash install-qt 5.9.4
+Enviroument variables
+=====================
+
+QT_CI_PACKAGES - packages to install. You can check availble packages if set VERBOSE to 1.
+
+Example:
+
+	export VERBOSE=1
+	export QT_CI_PACKAGES=qt,qt.594,qt.594.gcc_64,qt.594.doc.qtvirtualkeyboard
 
 Setup
 =====
