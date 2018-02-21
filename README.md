@@ -13,6 +13,18 @@ Since this project is a collection of script, and the script in bin folder do no
 It is not necessary to clone / download the whole repository into your build environmnet.
 You may just copy the script you need from this repository.
 
+**recipes/install-qt**
+
+To automaticly install Qt, you can just donwload 2 scripts and give them permition to be executed.
+
+"recipes/install-qt"
+"bin/extract-qt-installer"
+
+Then just run scritp "recipes/install-qt" with desiered verion of Qt
+Example:
+
+	bash install-qt 5.9.4
+
 Setup
 =====
 
