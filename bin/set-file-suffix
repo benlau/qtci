@@ -9,4 +9,4 @@ fi
 NAME=`echo "$1" | cut -d'.' -f1`
 EXTENSION=`echo "$1" | cut -d'.' -f2`
 
-mv $1 ${NAME}-$2.$EXTENSION
+mv "$1" "${NAME}-$2.$EXTENSION"
