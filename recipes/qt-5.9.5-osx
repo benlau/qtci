@@ -14,11 +14,12 @@ APPFILE=/Volumes/${INSTALLER_NAME}/${INSTALLER_NAME}.app/Contents/MacOS/${INSTAL
 echo $INSTALLER_NAME
 echo $APPFILE
 
-wget -c $DOWNLOAD_URL
-hdiutil mount ${INSTALLER}
+wget -nv -c $DOWNLOAD_URL
+hdiutil attach ${INSTALLER}
 ls /Volumes
 echo Installing Qt
 extract-qt-installer $APPFILE $PWD/Qt
+hdiutil detach /Volumes/${INSTALLER_NAME}
 
 echo Create $ENVFILE
 cat << EOF > $ENVFILE
