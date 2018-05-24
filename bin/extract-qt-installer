@@ -3,12 +3,33 @@
 # License: Apache-2.0
 # https://github.com/benlau/qtci
 
+function usage() {
+    echo "extract-qt-installer qt-installer output_path"
+    echo "extract-qt-installer --list-packages qt-installer"
+    exit -1
+}
+
 set -e #quit on error
 
-if [ $# -lt 2 ];
+OPTS=`getopt -o l --long list-packages  -n "extract-qt-installer" -- "$@"`
+
+LIST_PACKAGES=0
+eval set -- "$OPTS"
+
+while true
+do
+  case "$1" in
+    --list-packages)
+      LIST_PACKAGES=1
+      shift;;
+    --) shift;break;;
+    *) shift;;
+  esac
+done
+
+if [ $# -lt 2 ]
 then
-    echo extract-qt-installer qt-installer output_path
-    exit -1
+    usage
 fi
 
 export PATH=$PATH:$PWD
@@ -81,11 +102,13 @@ Controller.prototype.CredentialsPageCallback = function() {
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
 
-    var components = installer.components();
-    log("Available components: " + components.length);
+    if ($LIST_PACKAGES) {
+      var components = installer.components();
+      log("Available components: " + components.length);
 
-    for (var i = 0 ; i < components.length ;i++) {
-        log(components[i].name);
+      for (var i = 0 ; i < components.length ;i++) {
+          log(components[i].name);
+      }
     }
 
     log("Select components");
