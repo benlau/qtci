@@ -27,11 +27,6 @@ do
   esac
 done
 
-if [ $# -lt 2 ]
-then
-    usage
-fi
-
 export PATH=$PATH:$PWD
 export WORKDIR=$PWD
 INSTALLER=$1
@@ -39,10 +34,29 @@ OUTPUT=$2
 SCRIPT="$(mktemp /tmp/tmp.XXXXXXXXX)"
 PACKAGES=$QT_CI_PACKAGES
 
-if [[ ! "${OUTPUT:0:1}" = "/" ]] 
+if [ $LIST_PACKAGES -gt 0 ]
 then 
-    echo output path must be an absolute path
-    exit -1
+
+	if [ $# -lt 1 ]
+	then
+		usage
+	fi
+	
+	OUTPUT="/tmp/Qt"
+
+else
+
+	if [ $# -lt 2 ]
+	then
+		usage
+	fi
+
+	if [[ ! "${OUTPUT:0:1}" = "/" ]] 
+	then 
+		echo output path must be an absolute path
+		exit -1
+	fi
+
 fi
 
 cat <<EOF > $SCRIPT
@@ -83,6 +97,9 @@ function Controller() {
     });
     installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.Yes);
     installer.setMessageBoxAutomaticAnswer("installationErrorWithRetry", QMessageBox.Ignore);
+    
+    // Allow to cancel installation
+    installer.setMessageBoxAutomaticAnswer("cancelInstallation", QMessageBox.Yes);
 }
 
 Controller.prototype.WelcomePageCallback = function() {
@@ -101,6 +118,7 @@ Controller.prototype.CredentialsPageCallback = function() {
 }
 
 Controller.prototype.ComponentSelectionPageCallback = function() {
+	log("ComponentSelectionPageCallback");
 
     if ($LIST_PACKAGES) {
       var components = installer.components();
@@ -109,6 +127,9 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
       for (var i = 0 ; i < components.length ;i++) {
           log(components[i].name);
       }
+      
+      gui.clickButton(buttons.CancelButton);
+      return;
     }
 
     log("Select components");
@@ -175,6 +196,8 @@ Controller.prototype.PerformInstallationPageCallback = function() {
 }
 
 Controller.prototype.FinishedPageCallback = function() {
+    log("FinishedPageCallback");
+
     var widget = gui.currentPageWidget();
 
     if (widget.LaunchQtCreatorCheckBoxForm) {
