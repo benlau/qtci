@@ -24,6 +24,7 @@ Then just run scritp "recipes/install-qt" with desiered verion of Qt
 Example:
 
 	bash install-qt 5.9.4
+
 Enviroument variables
 =====================
 
@@ -48,7 +49,14 @@ Script
 **(1) bin/extract-qt-installer**
 --------------------------------
 
-Extract installer of Qt to target path (for Qt 5.5 or above)
+Usage
+
+```
+    extract-qt-installer qt-installer output_path
+    extract-qt-installer --list-packages qt-installer
+```
+
+Extract installer of Qt to target path (for Qt 5.5 or above). If --list-packages is given, it will show the available packages from the installer and terminate immediately. 
 
 Example:
 
