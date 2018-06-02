@@ -4,6 +4,7 @@
 # https://github.com/benlau/qtci
 
 function usage() {
+    echo "Usage:"
     echo "extract-qt-installer qt-installer output_path"
     echo "extract-qt-installer --list-packages qt-installer"
     exit -1
@@ -11,21 +12,32 @@ function usage() {
 
 set -e #quit on error
 
-OPTS=`getopt -o l --long list-packages  -n "extract-qt-installer" -- "$@"`
-
 LIST_PACKAGES=0
-eval set -- "$OPTS"
 
-while true
-do
-  case "$1" in
-    --list-packages)
-      LIST_PACKAGES=1
-      shift;;
-    --) shift;break;;
-    *) shift;;
-  esac
-done
+getopt --test > /dev/null 2>&1
+
+if [ "$?" != "4" ]
+then
+    echo "Warning: gnu-getopt is not installed. Long parameter like '--list-package' will not be working. Please install gnu-getopt by 'brew install gnu-getopt'"
+    
+else
+
+    OPTS=`getopt -o l --long list-packages  -n "extract-qt-installer" -- "$*"`
+    eval set -- "$OPTS"
+
+    echo $OPTS
+    while true
+    do
+      case "$1" in
+        --list-packages)
+          LIST_PACKAGES=1
+          shift;;
+        --) shift;break;;
+        *) shift;;
+      esac
+    done
+
+fi
 
 export PATH=$PATH:$PWD
 export WORKDIR=$PWD
@@ -56,7 +68,7 @@ else
 		echo output path must be an absolute path
 		exit -1
 	fi
-
+    
 fi
 
 cat <<EOF > $SCRIPT
