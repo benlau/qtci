@@ -10,22 +10,21 @@ function usage() {
     exit -1
 }
 
-set -e #quit on error
-
 LIST_PACKAGES=0
 
 getopt --test > /dev/null 2>&1
+GETOPT_RET_CODE=$?
 
-if [ "$?" != "4" ]
+set -e #quit on error
+
+if [ "$GETOPT_RET_CODE" != "4" ]
 then
-    echo "Warning: gnu-getopt is not installed. Long parameter like '--list-package' will not be working. Please install gnu-getopt by 'brew install gnu-getopt'"
-    
+    echo "Warning: gnu-getopt is not installed. Long parameter like '--list-package' will not be working. Please install gnu-getopt by 'brew install gnu-getopt'"   
 else
 
     OPTS=`getopt -o l --long list-packages  -n "extract-qt-installer" -- "$*"`
     eval set -- "$OPTS"
 
-    echo $OPTS
     while true
     do
       case "$1" in
@@ -36,8 +35,8 @@ else
         *) shift;;
       esac
     done
-
 fi
+
 
 export PATH=$PATH:$PWD
 export WORKDIR=$PWD
