@@ -22,7 +22,8 @@ then
     echo "Warning: gnu-getopt is not installed. Long parameter like '--list-package' will not be working. Please install gnu-getopt by 'brew install gnu-getopt'"   
 else
 
-    OPTS=`getopt -o l --long list-packages  -n "extract-qt-installer" -- "$*"`
+	OPTS=`getopt -o l --long list-packages  -n "extract-qt-installer" -- "$@"`
+
     eval set -- "$OPTS"
 
     while true
