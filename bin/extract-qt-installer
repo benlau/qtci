@@ -126,6 +126,20 @@ Controller.prototype.WelcomePageCallback = function() {
 }
 
 Controller.prototype.CredentialsPageCallback = function() {
+	
+	var login = installer.environmentVariable("QT_CI_LOGIN");
+	var password = installer.environmentVariable("QT_CI_PASSWORD");
+
+	if (login === "" || password === "") {
+		gui.clickButton(buttons.CommitButton);
+	}
+	
+    var widget = gui.currentPageWidget();
+
+	widget.loginWidget.EmailLineEdit.setText(login);
+
+	widget.loginWidget.PasswordLineEdit.setText(password);
+
     gui.clickButton(buttons.CommitButton);
 }
 
