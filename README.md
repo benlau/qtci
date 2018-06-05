@@ -68,7 +68,8 @@ Environment Variables
 
 	VERBOSE [Optional] Set to "true" will enable VERBOSE output
 	QT_CI_PACKAGES [Optional] Select the components to be installed instead of using default (eg. QT_CI_PACKAGES="qt.59.gcc_64")
-
+	QT_CI_LOGIN [Optional] The login name 
+	QT_CI_PASSWORD [Optional] The password of login
 
 
 **(2) bin/extract-ifw**
