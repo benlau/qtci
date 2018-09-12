@@ -12,18 +12,20 @@ then
     echo install-android-sdk packages
     echo
     echo Example:
-    echo     install-android-sdk platform-tool,build-tools-20.0.0,android-19 
+    echo     install-android-sdk platform-tool,build-tools-20.0.0,android-19
     exit -1
 fi
 
-# e.g: platform-tool,build-tools-20.0.0,android-19 
+NDK_VERSION=${NDK_VERSION:=r17c}
+
+# e.g: platform-tool,build-tools-20.0.0,android-19
 PACKAGES=$1
 
 echo Downloading Android SDK...
-wget -c -nv http://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
+wget -c -nv https://dl.google.com/android/android-sdk_r23.0.2-linux.tgz
 
 echo Downloading Android NDK...
-wget -c -nv http://dl.google.com/android/ndk/android-ndk-r10c-linux-x86_64.bin
+wget -c -nv https://dl.google.com/android/repository/android-ndk-${NDK_VERSION}-linux-x86_64.zip
 
 echo Extacting Android SDK...
 tar -zxf android-sdk_r23.0.2-linux.tgz
@@ -32,12 +34,13 @@ echo Upgrading Android SDK...
 (sleep 5 ; while true ; do sleep 1 ; printf 'y\r\n' ; done ) | ./android-sdk-linux/tools/android update sdk -u -a -t $PACKAGES
 
 echo Installing Android NDK...
-(7zr x android-ndk-r10c-linux-x86_64.bin | grep -v ^Extract)
+(unzip android-ndk-${NDK_VERSION}-linux-x86_64.zip)
 
 echo Android SDK and NDK installed
 ./android-sdk-linux/platform-tools/adb kill-server
 
 echo
 echo export PATH=$PWD/android-sdk-linux/tools:$PATH
-echo export ANDROID_NDK_ROOT=$PWD/android-ndk-r10c
+echo export ANDROID_NDK_ROOT=$PWD/android-ndk-${NDK_VERSION}
 echo export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
+
