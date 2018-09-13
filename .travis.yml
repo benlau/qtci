@@ -18,6 +18,8 @@ script:
     - extract-qt-installer --list-packages qt-unified-linux-x64-online.run
     - qt-5.5.1-android-19
     - cat qt-5.5.1-android-19.env
+    - find ${ANDROID_NDK_ROOT} -name arm-linux-androideabi-gcc
+    - which arm-linux-androideabi-gcc
     - ls $QT_ROOT
     - source qt-5.5.1-android-19.env
     - which qmake
