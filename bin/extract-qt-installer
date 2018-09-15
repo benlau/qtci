@@ -105,7 +105,7 @@ function log() {
 
 function printObject(object) {
 	for (var i in object) {
-		console.log([i, object[i]].join(" "));
+		log([i, object[i]].join(" "));
 	}
 }
 
