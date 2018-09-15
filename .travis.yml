@@ -11,15 +11,16 @@ before_install:
     - sudo update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
     - sh -e /etc/init.d/xvfb start
 script:
+    - ENV_FILE=qt-5.9.5-android-19.env
     - export WORKDIR=$PWD
     - echo $PWD
     - source path.env
     - wget -c https://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
     - extract-qt-installer --list-packages qt-unified-linux-x64-online.run
-    - qt-5.5.1-android-19
-    - cat qt-5.5.1-android-19.env
+    - install-qt-5.9.5-android-19
+    - cat $ENV_FILE
     - ls $QT_ROOT
-    - source qt-5.5.1-android-19.env
+    - source $ENV_FILE
     - which qmake
     - git clone https://github.com/benlau/quickandroid.git
     - cd quickandroid/examples/quickandroidexample

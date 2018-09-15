@@ -103,6 +103,12 @@ function log() {
     console.log(msg.join(" "));
 }
 
+function printObject(object) {
+	for (var i in object) {
+		console.log([i, object[i]].join(" "));
+	}
+}
+
 var status = {
 	finishedPageVisible: false,
 	installationFinished: false
@@ -111,6 +117,7 @@ var status = {
 function tryFinish() {
 
 	if (status.finishedPageVisible && status.installationFinished) {
+		log("Press Finish Button");
 	    gui.clickButton(buttons.FinishButton);
 	}
 }
@@ -244,6 +251,11 @@ Controller.prototype.FinishedPageCallback = function() {
         // No this form for minimal platform
         widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
     }
+    
+    if (widget.RunItCheckBox) {
+		// LaunchQtCreatorCheckBoxForm may not works for newer version.
+		widget.RunItCheckBox.setChecked(false);
+	}
 
 	// Bug? Qt 5.9.5 and Qt 5.9.6 installer show finished page before the installation completed
 	// Don't press "finishButton" immediately
