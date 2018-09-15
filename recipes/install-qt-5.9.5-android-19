@@ -3,6 +3,7 @@
 URL=https://download.qt.io/archive/qt/5.9/5.9.5/qt-opensource-linux-x64-5.9.5.run
 FILE=`basename $URL`
 NAME=qt-5.9.5-android-19
+export QT_CI_PACKAGES=qt.595.android_armv7
 
 echo Downloading Qt
 wget -q -c --no-check-certificate -nv $URL

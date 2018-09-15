@@ -16,8 +16,8 @@ script:
     - source path.env
     - wget -c https://download.qt.io/official_releases/online_installers/qt-unified-linux-x64-online.run
     - extract-qt-installer --list-packages qt-unified-linux-x64-online.run
-    - qt-5.5.1-android-19
-    - cat qt-5.5.1-android-19.env
+    - qt-5.9.5-android-19
+    - cat qt-5.9.5-android-19.env
     - find ${ANDROID_NDK_ROOT} -name arm-linux-androideabi-gcc
     - which arm-linux-androideabi-gcc
     - ls $QT_ROOT
