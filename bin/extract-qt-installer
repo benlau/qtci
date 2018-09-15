@@ -103,14 +103,28 @@ function log() {
     console.log(msg.join(" "));
 }
 
+var status = {
+	finishedPageVisible: false,
+	installationFinished: false
+}
+
+function tryFinish() {
+
+	if (status.finishedPageVisible && status.installationFinished) {
+	    gui.clickButton(buttons.FinishButton);
+	}
+}
+
 function Controller() {
     installer.installationFinished.connect(function() {
+		status.installationFinished = true;
         gui.clickButton(buttons.NextButton);
+        tryFinish();
     });
     installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.Yes);
     installer.setMessageBoxAutomaticAnswer("installationErrorWithRetry", QMessageBox.Ignore);
     
-    // Allow to cancel installation
+    // Allow to cancel installation for arguments --list-packages
     installer.setMessageBoxAutomaticAnswer("cancelInstallation", QMessageBox.Yes);
 }
 
@@ -230,7 +244,13 @@ Controller.prototype.FinishedPageCallback = function() {
         // No this form for minimal platform
         widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
     }
-    gui.clickButton(buttons.FinishButton);
+
+	// Bug? Qt 5.9.5 and Qt 5.9.6 installer show finished page before the installation completed
+	// Don't press "finishButton" immediately
+    
+	status.finishedPageVisible = true;
+	tryFinish();
+   
 }
 
 EOF
