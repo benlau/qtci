@@ -103,6 +103,12 @@ function log() {
     console.log(msg.join(" "));
 }
 
+function printObject(object) {
+	for (var i in object) {
+		console.log([i, object[i]].join(" "));
+	}
+}
+
 var status = {
 	finishedPageVisible: false,
 	installationFinished: false
@@ -112,6 +118,7 @@ function tryFinish() {
 
 	if (status.finishedPageVisible && status.installationFinished) {
 	    gui.clickButton(buttons.FinishButton);
+	    console.log("Press finish button");
 	}
 }
 
@@ -240,12 +247,16 @@ Controller.prototype.FinishedPageCallback = function() {
 
     var widget = gui.currentPageWidget();
 
+	console.log(widget);
+	printObject(widget);
+
     if (widget.LaunchQtCreatorCheckBoxForm) {
         // No this form for minimal platform
         widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
     }
     
     if (widget.RunItCheckBox) {
+		console.log(widget.RunItCheckBox);
 		widget.RunItCheckBox.setChecked(false);
 	}
 
