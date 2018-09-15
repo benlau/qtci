@@ -244,6 +244,10 @@ Controller.prototype.FinishedPageCallback = function() {
         // No this form for minimal platform
         widget.LaunchQtCreatorCheckBoxForm.launchQtCreatorCheckBox.setChecked(false);
     }
+    
+    if (widget.RunItCheckBox) {
+		widget.RunItCheckBox.setChecked(false);
+	}
 
 	// Bug? Qt 5.9.5 and Qt 5.9.6 installer show finished page before the installation completed
 	// Don't press "finishButton" immediately
