@@ -1,0 +1,20 @@
+#!/bin/sh
+
+URL=https://download.qt.io/archive/qt/5.9/5.9.5/qt-opensource-linux-x64-5.9.5.run
+FILE=`basename $URL`
+NAME=qt-5.9.5-android-19
+
+echo Downloading Qt
+wget -q -c --no-check-certificate -nv $URL
+echo Installing Qt
+extract-qt-installer $FILE $PWD/Qt
+install-android-sdk platform-tool,build-tools-22.0.1,android-19
+
+echo Create $NAME.env
+cat << EOF > $NAME.env
+export QT_ROOT=$PWD/Qt
+export QT_HOME=$PWD/Qt/5.9.5
+export PATH=$PWD/Qt/5.9.5/android_armv7/bin:$PWD/android-sdk-linux/tools:$PATH
+export ANDROID_NDK_ROOT=$PWD/android-ndk-r17c
+export ANDROID_SDK_ROOT=$PWD/android-sdk-linux
+EOF

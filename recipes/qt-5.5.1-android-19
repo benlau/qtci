@@ -1,5 +1,7 @@
 #!/bin/sh
 
+echo Qt 5.5.1 + Android is not supported by QtCi any more
+exit -1
 echo Downloading Qt
 wget -q -c --no-check-certificate -nv https://download.qt.io/archive/qt/5.5/5.5.1/qt-opensource-linux-x64-android-5.5.1.run
 echo Installing Qt
