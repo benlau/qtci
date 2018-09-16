@@ -104,12 +104,15 @@ function log() {
 }
 
 function printObject(object) {
+	var lines = [];
 	for (var i in object) {
-		log([i, object[i]].join(" "));
+		lines.push([i, object[i]].join(" "));
 	}
+	log(lines.join(","));
 }
 
 var status = {
+	widget: null,
 	finishedPageVisible: false,
 	installationFinished: false
 }
@@ -117,6 +120,11 @@ var status = {
 function tryFinish() {
 
 	if (status.finishedPageVisible && status.installationFinished) {
+		printObject(status.widget.RunItCheckBox);
+		if (status.widget.RunItCheckBox) {
+			status.widget.RunItCheckBox.setChecked(false);
+		}
+		printObject(status.widget.RunItCheckBox);		
 		log("Press Finish Button");
 	    gui.clickButton(buttons.FinishButton);
 	}
@@ -170,10 +178,12 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
     if ($LIST_PACKAGES) {
       var components = installer.components();
       log("Available components: " + components.length);
+      var packages = ["Packages: "];
 
       for (var i = 0 ; i < components.length ;i++) {
-          log(components[i].name);
+		  packages.push(components[i].name);
       }
+	  log(packages.join(" "));
       
       gui.clickButton(buttons.CancelButton);
       return;
@@ -261,6 +271,7 @@ Controller.prototype.FinishedPageCallback = function() {
 	// Don't press "finishButton" immediately
     
 	status.finishedPageVisible = true;
+	status.widget = widget;
 	tryFinish();
    
 }
