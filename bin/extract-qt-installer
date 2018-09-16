@@ -270,13 +270,14 @@ Controller.prototype.FinishedPageCallback = function() {
 		widget.RunItCheckBox.setChecked(false);
 	}
 
+	printObject(widget);
+
 	// Bug? Qt 5.9.5 and Qt 5.9.6 installer show finished page before the installation completed
 	// Don't press "finishButton" immediately
     
 	status.finishedPageVisible = true;
 	status.widget = widget;
-	tryFinish();
-   
+	tryFinish();   
 }
 
 EOF
