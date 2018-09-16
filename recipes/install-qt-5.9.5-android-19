@@ -8,7 +8,7 @@ export QT_CI_PACKAGES=qt.595.android_armv7
 echo Downloading Qt
 wget -q -c --no-check-certificate -nv $URL
 echo Installing Qt
-VERBOSE=1 extract-qt-installer $FILE $PWD/Qt
+extract-qt-installer $FILE $PWD/Qt
 install-android-sdk platform-tool,build-tools-22.0.1,android-19
 
 echo Create $NAME.env
