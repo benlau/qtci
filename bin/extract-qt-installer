@@ -10,6 +10,9 @@ function usage() {
     exit -1
 }
 
+unset DISPLAY
+echo $DISPLAY
+
 LIST_PACKAGES=0
 
 getopt --test > /dev/null 2>&1
