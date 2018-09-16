@@ -19,7 +19,6 @@ script:
     - extract-qt-installer --list-packages qt-unified-linux-x64-online.run
     - install-qt-5.9.5-android-19
     - cat $ENV_FILE
-    - ls $QT_ROOT
     - source $ENV_FILE
     - which qmake
     - git clone https://github.com/benlau/quickandroid.git

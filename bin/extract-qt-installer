@@ -10,6 +10,9 @@ function usage() {
     exit -1
 }
 
+unset DISPLAY
+echo $DISPLAY
+
 LIST_PACKAGES=0
 
 getopt --test > /dev/null 2>&1
@@ -22,7 +25,7 @@ then
     echo "Warning: gnu-getopt is not installed. Long parameter like '--list-package' will not be working. Please install gnu-getopt by 'brew install gnu-getopt'"   
 else
 
-	OPTS=`getopt -o l --long list-packages  -n "extract-qt-installer" -- "$@"`
+	OPTS=`getopt -o l --long list-packages --long disable-progress-report -n "extract-qt-installer" -- "$@"`
 
     eval set -- "$OPTS"
 
@@ -32,6 +35,9 @@ else
         --list-packages)
           LIST_PACKAGES=1
           shift;;
+	    --disable-progress-report)
+	      DISABLE_PROGRESS_REPORT=1
+	      shift;;
         --) shift;break;;
         *) shift;;
       esac
@@ -104,12 +110,15 @@ function log() {
 }
 
 function printObject(object) {
+	var lines = [];
 	for (var i in object) {
-		console.log([i, object[i]].join(" "));
+		lines.push([i, object[i]].join(" "));
 	}
+	log(lines.join(","));
 }
 
 var status = {
+	widget: null,
 	finishedPageVisible: false,
 	installationFinished: false
 }
@@ -117,6 +126,9 @@ var status = {
 function tryFinish() {
 
 	if (status.finishedPageVisible && status.installationFinished) {
+		if (status.widget.RunItCheckBox) {
+			status.widget.RunItCheckBox.setChecked(false);
+		}
 		log("Press Finish Button");
 	    gui.clickButton(buttons.FinishButton);
 	}
@@ -170,10 +182,12 @@ Controller.prototype.ComponentSelectionPageCallback = function() {
     if ($LIST_PACKAGES) {
       var components = installer.components();
       log("Available components: " + components.length);
+      var packages = ["Packages: "];
 
       for (var i = 0 ; i < components.length ;i++) {
-          log(components[i].name);
+		  packages.push(components[i].name);
       }
+	  log(packages.join(" "));
       
       gui.clickButton(buttons.CancelButton);
       return;
@@ -261,20 +275,26 @@ Controller.prototype.FinishedPageCallback = function() {
 	// Don't press "finishButton" immediately
     
 	status.finishedPageVisible = true;
-	tryFinish();
-   
+	status.widget = widget;
+	tryFinish();   
 }
 
 EOF
 
-ARGS="-v"
-
 chmod u+x $1
 
-
-if [ -n "$VERBOSE" ]
+if [ -n "$DISABLE_PROGRESS_REPORT" ]
 then
-    QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT
+	QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT
 else
-    QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT | grep "\(QTCI\|operation\)"
+	ARGS="-v"
+
+	if [ -n "$VERBOSE" ]
+	then
+		QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT
+	else
+		QT_QPA_PLATFORM=minimal $INSTALLER $ARGS --script $SCRIPT | grep "\(QTCI\|operation\)"
+	fi
 fi
+
+
