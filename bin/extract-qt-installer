@@ -154,7 +154,7 @@ Controller.prototype.WelcomePageCallback = function() {
     var widget = gui.currentPageWidget();
 
     widget.completeChanged.connect(function() {
-        gui.clickButton(buttons.NextButton);
+        gui.clickButton(buttons.NextButton, 1000);
     });
 }
 
