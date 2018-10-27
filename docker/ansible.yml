@@ -11,11 +11,31 @@
         - build-essential 
         - golang
         - mesa-common-dev 
-        - qbs 
+        - qbs
         - git
+        - vim
         - ca-certificates
     - name: /etc/sudoers
       blockinfile:
         dest: /etc/sudoers
         block: |
            ci ALL=(ALL) NOPASSWD: ALL
+    - name: QTCI Path in .bashrc
+      blockinfile:
+        dest: /home/ci/.bashrc
+        marker_begin: "QTCI_PATH_BEGIN"
+        marker_end: "QTCI_PATH_END"
+        block: |
+           source /host/qtci/path.env
+    - name: Check is qpm installed
+      shell: command -v qpm > /dev/null 2>&1
+      register: is_qpm_exist
+      ignore_errors: true
+    - name: qpm
+      become: yes
+      become_user: root
+      environment:
+        GOPATH: /usr/local
+      shell: "go get qpm.io/qpm"
+      when: is_qpm_exist.rc != 0
+

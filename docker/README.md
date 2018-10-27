@@ -8,6 +8,14 @@ npm install
 npm run docker_image_build
 npm run docker_container_build
 npm run docker_container_start
+```
+
+Install and Use Specific Qt version
+```
+npm use:qt5.9.2
+```
+
+```
 npm run shell
 ```
 
@@ -17,7 +25,7 @@ Configuration
 Mount your own directory
 
 ```
-npm config set qtci:docker_container_args "-v DOCKER_DIR:HOST_DIR"
+npm config set qtci:docker_container_args "-v HOST_DIR:DOCKER_DIR"
 npm run docker_container_build
 ```
 
