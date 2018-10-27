@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Install Ubuntu Packages
+      become: yes
+      become_user: root
+      apt:  name={{item}} state=present
+      update_cache: yes
+      upgrade: yes
+      with_items:
+        - build-essential 
+        - golang
+        - mesa-common-dev 
+        - qbs 
+        - git
+        - ca-certificates
+    - name: /etc/sudoers
+      blockinfile:
+        dest: /etc/sudoers
+        block: |
+           ci ALL=(ALL) NOPASSWD: ALL

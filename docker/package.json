@@ -1,0 +1,26 @@
+{
+  "name": "qtci",
+  "version": "0.0.1",
+  "description": "QTCI Docker Environment",
+  "main": "index.js",
+  "config": {
+    "docker_image": "qtci/qtapp-builder",
+    "docker_container": "qtapp-builder",
+    "docker_container_args": ""
+  },
+  "scripts": {
+	"docker_image_build": "docker build --build-arg USERID=`id -u` -t $npm_package_config_docker_image .",
+	"docker_image_remove": "docker image rm  $npm_config_docker_image",
+	"docker_container_build": "run-script-os",
+    "docker_container_build:darwin": "docker run --name $npm_package_config_docker_container $npm_package_config_docker_container_args -v /host/qtci:${PWD}/.. -v /host/download:${PWD}/download -d -t $npm_package_config_docker_image",
+    "docker_container_build:linux": "docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $npm_package_config_docker_container_args  -v /host/qtci:${PWD}/.. -v /host/download:${PWD}/download --name $npm_package_config_docker_container -d -t $npm_package_config_docker_image",
+    "docker_container_start": "docker start $npm_package_config_docker_container",
+    "docker_container_remove": "docker container stop $npm_package_config_docker_container && docker container rm $npm_package_config_docker_container",
+    "shell": "docker exec --user=`id -u` -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" -it $npm_package_config_docker_container bash"
+  },
+  "author": "Ben Lau",
+  "license": "ISC",
+  "dependencies": {
+    "run-script-os": "1.0.3"
+  }
+}
