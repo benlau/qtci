@@ -6,18 +6,20 @@
   "config": {
     "docker_image": "qtci/qtapp-builder",
     "docker_container": "qtapp-builder",
-    "docker_container_args": ""
+    "docker_container_build_args": "",
+    "docker_container_exec_args": ""
   },
   "scripts": {
 	"docker_image_build": "docker build --build-arg USERID=`id -u` -t $npm_package_config_docker_image .",
 	"docker_image_remove": "docker image rm  $npm_config_docker_image",
 	"docker_container_build": "run-script-os",
-    "docker_container_build:darwin": "docker run --name $npm_package_config_docker_container $npm_package_config_docker_container_args -v ${PWD}/download:/host/download --name $npm_package_config_docker_containe -d -t $npm_package_config_docker_image",
-    "docker_container_build:linux": "docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $npm_package_config_docker_container_args  -v ${PWD}/..:/host/qtci -v ${PWD}/download:/host/download --name $npm_package_config_docker_container -d -t $npm_package_config_docker_image",
+    "docker_container_build:darwin": "docker run --name $npm_package_config_docker_container $npm_package_config_docker_container_build_args -v ${PWD}/download:/host/download --name $npm_package_config_docker_containe -d -t $npm_package_config_docker_image",
+    "docker_container_build:linux": "docker run --cap-add=SYS_PTRACE --security-opt seccomp=unconfined  -v /tmp/.X11-unix:/tmp/.X11-unix -e DISPLAY $npm_package_config_docker_container_build_args  -v ${PWD}/..:/host/qtci -v ${PWD}/download:/host/download --name $npm_package_config_docker_container -d -t $npm_package_config_docker_image",
     "docker_container_start": "docker start $npm_package_config_docker_container",
     "docker_container_remove": "docker container stop $npm_package_config_docker_container && docker container rm $npm_package_config_docker_container",
     "docker_container_run_ansible": "docker exec --user=`id -u` -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" -it $npm_package_config_docker_container bash -c 'sudo ansible-playbook /host/qtci/docker/ansible.yml' " ,
     "use:qt5.9.2": "docker exec --user=`id -u` -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" -it $npm_package_config_docker_container bash -c 'sudo ansible-playbook /host/qtci/docker/ansible-qt5.9.2.yml' " ,
+    "use:qt5.11.2": "docker exec --user=`id -u` -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" -it $npm_package_config_docker_container bash -c 'sudo ansible-playbook /host/qtci/docker/ansible-qt5.11.2.yml' " ,
     "shell": "docker exec --user=`id -u` -e COLUMNS=\"`tput cols`\" -e LINES=\"`tput lines`\" -it $npm_package_config_docker_container bash"
   },
   "author": "Ben Lau",

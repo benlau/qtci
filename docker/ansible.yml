@@ -1,5 +1,7 @@
 ---
 - hosts: localhost
+  vars:
+    user: ci
   tasks:
     - name: Install Ubuntu Packages
       become: yes
@@ -22,7 +24,7 @@
            ci ALL=(ALL) NOPASSWD: ALL
     - name: QTCI Path in .bashrc
       blockinfile:
-        dest: /home/ci/.bashrc
+        dest: /home/{{user}}/.bashrc
         marker_begin: "QTCI_PATH_BEGIN"
         marker_end: "QTCI_PATH_END"
         block: |

@@ -25,7 +25,7 @@ Configuration
 Mount your own directory
 
 ```
-npm config set qtci:docker_container_args "-v HOST_DIR:DOCKER_DIR"
+npm config set qtci:docker_container_build_args "-v HOST_DIR:DOCKER_DIR"
 npm run docker_container_build
 ```
 
