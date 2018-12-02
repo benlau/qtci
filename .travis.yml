@@ -5,9 +5,7 @@ dist: trusty
 
 matrix:
   include:
-  - env:
-      - DISPLAY=:99.0
-    before_install:
+  - before_install:
         - cat /etc/apt/sources.list
         - sudo apt-get update
         - sudo apt-get install --force-yes -qq p7zip openjdk-7-jdk ant lib32z1-dev lib32stdc++6  #lib32* are needed by Android SDK
