@@ -1,6 +1,8 @@
 QTCI Docker Images
 ===============
 
+It is a docker container to build and develop Qt application
+
 Setup
 
 ```

@@ -1,0 +1,32 @@
+---
+- import_playbook: ansible.yml
+- hosts: localhost
+  vars:
+    qtver: 5.10.1
+    url: https://download.qt.io/archive/qt/5.10/5.10.1/qt-opensource-linux-x64-5.10.1.run
+    file: qt-opensource-linux-x64-5.10.1.run
+    hash: md5:8bc46db7cd82d738fa0015aea0bf7cb1
+    install_path: /opt/qt5.10.1
+    packages: qt.qt5.5101.gcc_64
+  tasks:
+  - name: Download Qt
+    become: yes
+    become_user: ci
+    get_url:
+      url: "{{url}}"
+      dest: /host/download/{{file}}
+      checksum: "{{hash}}"
+  - name: Check Installation
+    stat:
+       path: "{{ install_path }}"
+    register: qt_installation_result
+  - name: Install Qt
+    shell: DISPLAY="" QT_CI_PACKAGES="{{packages}}" /host/qtci/bin/extract-qt-installer /host/download/{{file}} {{install_path}}
+    when: qt_installation_result.stat.exists == False
+  - name: QT Path in .bashrc
+    blockinfile:
+      dest: /home/ci/.bashrc
+      marker_begin: "QT_PATH_BEGIN"
+      marker_end: "QT_PATH_END"
+      block: |
+        export PATH={{install_path}}/{{qtver}}/gcc_64/bin:$PATH

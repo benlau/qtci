@@ -6,13 +6,11 @@
     - name: Install Ubuntu Packages
       become: yes
       become_user: root
-      apt:  name={{item}} state=present
-      update_cache: yes
-      upgrade: yes
+      apt:  name={{item}} state=present update_cache=yes
       with_items:
-        - build-essential 
+        - build-essential
         - golang
-        - mesa-common-dev 
+        - mesa-common-dev
         - qbs
         - git
         - vim
@@ -40,4 +38,3 @@
         GOPATH: /usr/local
       shell: "go get qpm.io/qpm"
       when: is_qpm_exist.rc != 0
-
