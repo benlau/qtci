@@ -1,10 +1,13 @@
 #!/bin/sh
 #QT_VERSION=5.10.0
 
-QT_VERSION=$1
+
+QT_VERSION=${1:-5.10.0}
+QTCI_DOWNLOADER=${3:-"wget -c -N"}
 QT_target_catalog=${2:-$PWD}
+
 echo Downloading Qt
-wget  -c  https://download.qt.io/archive/qt/$(echo $1 |cut -d "." -f-2)/${QT_VERSION}/qt-opensource-linux-x64-${QT_VERSION}.run
+${QTCI_DOWNLOADER} https://download.qt.io/archive/qt/$(echo $1 |cut -d "." -f-2)/${QT_VERSION}/qt-opensource-linux-x64-${QT_VERSION}.run || exit 1
 INSTALLER=qt-opensource-linux-x64-${QT_VERSION}.run
 ENVFILE=${QT_target_catalog}/qt-${QT_VERSION}.env
 echo Installing Qt
