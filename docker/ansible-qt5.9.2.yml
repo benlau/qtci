@@ -1,0 +1,33 @@
+---
+- import_playbook: ansible.yml
+- hosts: localhost
+  vars:
+    qtver: 5.9.2
+    url: https://download.qt.io/archive/qt/5.9/5.9.2/qt-opensource-linux-x64-5.9.2.run
+    file: qt-opensource-linux-x64-5.9.2.run
+    hash: md5:6b607f21a1953c3a272de7d5a4094a47
+    install_path: /opt/qt5.9.2
+    packages: qt.592.gcc_64,qt.592.qtwebengine
+  tasks:
+  - name: Download Qt
+    become: yes
+    become_user: ci
+    get_url:
+      url: "{{url}}"
+      dest: /host/download/{{file}}
+      checksum: "{{hash}}"
+  - name: Check Installation
+    stat:
+       path: "{{ install_path }}"
+    register: qt_installation_result
+  - name: Install Qt
+    shell: QT_CI_PACKAGES="{{packages}}" /host/qtci/bin/extract-qt-installer /host/download/{{file}} {{install_path}}
+    when: qt_installation_result.stat.exists == False
+  - name: QT Path in .bashrc
+    blockinfile:
+      dest: /home/ci/.bashrc
+      marker_begin: "QT_PATH_BEGIN"
+      marker_end: "QT_PATH_END"
+      block: |
+        export PATH={{install_path}}/{{qtver}}/gcc_64/bin:$PATH
+    
