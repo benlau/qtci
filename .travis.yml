@@ -28,39 +28,47 @@ matrix:
         - qmake
         - make install INSTALL_ROOT=$WORKDIR/build
         - androiddeployqt --output $WORKDIR/build
+  - os: osx
+    script: 
+      - QT_CI_PACKAGES=qt.qt5.597.clang_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt-osx 5.9.7 && source qt-5.9.7.env && qmake -version
+  - os: osx
+    script: 
+      - QT_CI_PACKAGES=qt.qt5.5120.clang_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt-osx 5.12.0 && source qt-5.12.0.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.0; find Qt -name qmake; source qt-5.6.0.env; qmake -version
+    - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.0 && source qt-5.6.0.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.1; find Qt -name qmake; source qt-5.6.1.env; qmake -version
+    - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.1 && source qt-5.6.1.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.1-1; find Qt -name qmake; source qt-5.6.1-1.env; qmake -version
+    - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.1-1 && source qt-5.6.1-1.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.2; find Qt -name qmake; source qt-5.6.2.env; qmake -version
+    - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.2 && source qt-5.6.2.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.563.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.3; find Qt -name qmake; source qt-5.6.3.env; qmake -version
+    - QT_CI_PACKAGES=qt.563.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.3 && source qt-5.6.3.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.59.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.0; find Qt -name qmake; source qt-5.9.0.env; qmake -version
+    - QT_CI_PACKAGES=qt.59.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.0 && source qt-5.9.0.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.591.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.1; find Qt -name qmake; source qt-5.9.1.env; qmake -version
+    - QT_CI_PACKAGES=qt.591.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.1 && source qt-5.9.1.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.592.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.2; find Qt -name qmake; source qt-5.9.2.env; qmake -version
+    - QT_CI_PACKAGES=qt.592.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.2 && source qt-5.9.2.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.593.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.3; find Qt -name qmake; source qt-5.9.3.env; qmake -version
+    - QT_CI_PACKAGES=qt.593.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.3 && source qt-5.9.3.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.594.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.4; find Qt -name qmake; source qt-5.9.4.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.594.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.4 && source qt-5.9.4.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.595.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.5; find Qt -name qmake; source qt-5.9.5.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.595.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.5 && source qt-5.9.5.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.596.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.6; find Qt -name qmake; source qt-5.9.6.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.596.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.6 && source qt-5.9.6.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.597.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.7; find Qt -name qmake; source qt-5.9.7.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.597.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.7 && source qt-5.9.7.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.5100.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.10.0; find Qt -name qmake; source qt-5.10.0.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.5100.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.10.0 && source qt-5.10.0.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.5101.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.10.1; find Qt -name qmake; source qt-5.10.1.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.5101.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.10.1 && source qt-5.10.1.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.5110.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.11.0; find Qt -name qmake; source qt-5.11.0.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.5110.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.11.0 && source qt-5.11.0.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.5111.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.11.1; find Qt -name qmake; source qt-5.11.1.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.5111.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.11.1 && source qt-5.11.1.env && qmake -version
   - script:
-    - QT_CI_PACKAGES=qt.qt5.5112.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.11.2; find Qt -name qmake; source qt-5.11.2.env; qmake -version
+    - QT_CI_PACKAGES=qt.qt5.5112.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.11.2 && source qt-5.11.2.env && qmake -version
+  - script:
+    - QT_CI_PACKAGES=qt.qt5.5120.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.0 && source qt-5.12.0.env && qmake -version
