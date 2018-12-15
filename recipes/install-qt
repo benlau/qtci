@@ -1,21 +1,43 @@
-#!/bin/sh
-#QT_VERSION=5.10.0
+#!/bin/bash -e
+# Reference:
+#   https://github.com/musescore/MuseScore/blob/master/build/travis/job_macos/install.sh
 
-
-QT_VERSION=${1:-5.10.0}
-QT_target_catalog=${2:-$PWD}
+QT_VERSION=${1:-5.12.0}
+QT_TARGET_CATALOG=${2:-$PWD}
 QT_CI_DOWNLOADER=${QT_CI_DOWNLOADER:-"wget -c -N"}
 
+if [ "$(uname)" = "Darwin" ]; then
+  DOWNLOAD_URL=https://download.qt.io/archive/qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${QT_VERSION}/qt-opensource-mac-x64-${QT_VERSION}.dmg
+  COMPILER=clang_64
+elif [ "$(uname)" = "Linux" ]; then
+  DOWNLOAD_URL=https://download.qt.io/archive/qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${QT_VERSION}/qt-opensource-linux-x64-${QT_VERSION}.run
+  COMPILER=gcc_64
+else
+  echo "Unsupported system." >&2
+  exit 1
+fi
+INSTALLER=$(basename $DOWNLOAD_URL)
+ENVFILE=${QT_TARGET_CATALOG}/qt-${QT_VERSION}.env
+
 echo Downloading Qt
-${QT_CI_DOWNLOADER} https://download.qt.io/archive/qt/$(echo $1 |cut -d "." -f-2)/${QT_VERSION}/qt-opensource-linux-x64-${QT_VERSION}.run || exit 1
-INSTALLER=qt-opensource-linux-x64-${QT_VERSION}.run
-ENVFILE=${QT_target_catalog}/qt-${QT_VERSION}.env
+${QT_CI_DOWNLOADER} ${DOWNLOAD_URL} || exit 1
+
 echo Installing Qt
+if [ "$(uname)" = "Darwin" ]; then
+  INSTALLER_NAME=${INSTALLER%.*}
+  APPFILE=/Volumes/${INSTALLER_NAME}/${INSTALLER_NAME}.app/Contents/MacOS/${INSTALLER_NAME}
+  hdiutil attach ${PWD}/${INSTALLER}
+  extract-qt-installer $APPFILE ${QT_TARGET_CATALOG}/Qt
+  hdiutil detach /Volumes/${INSTALLER_NAME}
+elif [ "$(uname)" = "Linux" ]; then
+  extract-qt-installer ${PWD}/${INSTALLER} ${QT_TARGET_CATALOG}/Qt
+fi
 
+echo Create ${ENVFILE}
+if [ -d "${QT_TARGET_CATALOG}/Qt/${QT_VERSION}/${COMPILER}/bin" ]; then
+  echo "export PATH=${QT_TARGET_CATALOG}/Qt/${QT_VERSION}/${COMPILER}/bin:$PATH" > ${ENVFILE}
+elif [ -d "${QT_TARGET_CATALOG}/Qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${COMPILER}/bin" ]; then
+  # some packages use an abbreviated version x.y in the path instead of x.y.z
+  echo "export PATH=${QT_TARGET_CATALOG}/Qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${COMPILER}/bin:$PATH" > ${ENVFILE}
+fi
 
-extract-qt-installer $PWD/$INSTALLER ${QT_target_catalog}//Qt
-
-echo Create $ENVFILE
-cat << EOF > $ENVFILE
-export PATH=${QT_target_catalog}/Qt/${QT_VERSION}/gcc_64/bin:$PATH
-EOF
