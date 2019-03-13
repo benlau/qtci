@@ -254,11 +254,13 @@ Controller.prototype.IntroductionPageCallback = function() {
     
    	/* 
 	   Online installer 3.0.6 
-	   - Don't click buttons.NextButton. It will skip the componenet selection.
-    */    
-    //gui.clickButton(buttons.NextButton);
+	   - Don't click buttons.NextButton directly. It will skip the componenet selection.
+    */
+    
+	if (installer.isOfflineOnly()) {
+		gui.clickButton(buttons.NextButton);
+	}  
 }
-
 
 Controller.prototype.TargetDirectoryPageCallback = function() {
     log("Set target installation page: $OUTPUT");
