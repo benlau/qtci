@@ -3,3 +3,5 @@ docker/download/*.run
 *.retry
 npm-debug.log
 yarn.lock
+*.run
+*.dmg

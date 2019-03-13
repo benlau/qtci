@@ -1,0 +1,49 @@
+#!/bin/bash -e
+# Install Qt by online installer
+
+function usage() {
+    echo "Usage:"
+    echo "install-qt-online \"packages\" output_path"
+    echo "Example"
+    echo "install-qt-online 'qt.qt5.5121.gcc_64' /opt/Qt"
+    exit -1
+}
+
+if [ $# -lt 2 ]
+then
+	usage
+fi
+
+export QT_CI_PACKAGES=${1}
+QT_TARGET_CATALOG=${2:-$PWD}
+QT_CI_DOWNLOADER=${QT_CI_DOWNLOADER:-"wget -c -N"}
+
+if [ "$(uname)" = "Darwin" ]; then
+  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.0/qt-unified-mac-x64-3.0.6-online.dmg
+  COMPILER=clang_64
+elif [ "$(uname)" = "Linux" ]; then
+  DOWNLOAD_URL=https://download.qt.io/archive/online_installers/3.0/qt-unified-linux-x64-3.0.6-online.run
+  COMPILER=gcc_64
+else
+  echo "Unsupported system." >&2
+  exit 1
+fi
+
+INSTALLER=$(basename $DOWNLOAD_URL)
+ENVFILE=${QT_TARGET_CATALOG}/qt-${QT_VERSION}.env
+
+echo Downloading Qt
+${QT_CI_DOWNLOADER} ${DOWNLOAD_URL} || exit 1
+
+echo Installing Qt
+
+if [ "$(uname)" = "Darwin" ]; then
+  INSTALLER_NAME=${INSTALLER%.*}
+  APPFILE=/Volumes/${INSTALLER_NAME}/${INSTALLER_NAME}.app/Contents/MacOS/${INSTALLER_NAME}
+  hdiutil attach ${PWD}/${INSTALLER}
+  extract-qt-installer $APPFILE ${QT_TARGET_CATALOG}/Qt
+  hdiutil detach /Volumes/${INSTALLER_NAME}
+elif [ "$(uname)" = "Linux" ]; then
+  extract-qt-installer ${PWD}/${INSTALLER} ${QT_TARGET_CATALOG}/Qt
+fi
+
