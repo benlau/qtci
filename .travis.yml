@@ -33,7 +33,7 @@ matrix:
       - QT_CI_PACKAGES=qt.qt5.598.clang_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.8 && source qt-5.9.8.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.9.8"
   - os: osx
     script: 
-      - QT_CI_PACKAGES=qt.qt5.5123.clang_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.3 && source qt-5.12.3.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.3"
+      - QT_CI_PACKAGES=qt.qt5.5124.clang_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.4 && source qt-5.12.4.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.4"
   - script:
     - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.0 && source qt-5.6.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.6.0"
   - script:
@@ -70,3 +70,5 @@ matrix:
     - QT_CI_PACKAGES=qt.qt5.5122.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.2 && source qt-5.12.2.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.2"
   - script:
     - QT_CI_PACKAGES=qt.qt5.5123.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.3 && source qt-5.12.3.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.3"
+  - script:
+    - QT_CI_PACKAGES=qt.qt5.5124.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.4 && source qt-5.12.4.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.4"
