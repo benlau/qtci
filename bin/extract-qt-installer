@@ -143,6 +143,7 @@ function Controller() {
     });
     installer.setMessageBoxAutomaticAnswer("OverwriteTargetDirectory", QMessageBox.Yes);
     installer.setMessageBoxAutomaticAnswer("installationErrorWithRetry", QMessageBox.Ignore);
+    installer.setMessageBoxAutomaticAnswer("XcodeError", QMessageBox.Ok);
     
     // Allow to cancel installation for arguments --list-packages
     installer.setMessageBoxAutomaticAnswer("cancelInstallation", QMessageBox.Yes);
