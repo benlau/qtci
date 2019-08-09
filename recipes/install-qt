@@ -4,7 +4,7 @@
 
 QT_VERSION=${1:-5.12.0}
 QT_TARGET_CATALOG=${2:-$PWD}
-QT_CI_DOWNLOADER=${QT_CI_DOWNLOADER:-"wget -c -N"}
+QT_CI_DOWNLOADER=${QT_CI_DOWNLOADER:-"wget --quiet -c -N"}
 
 if [ "$(uname)" = "Darwin" ]; then
   DOWNLOAD_URL=https://download.qt.io/archive/qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${QT_VERSION}/qt-opensource-mac-x64-${QT_VERSION}.dmg
@@ -41,3 +41,5 @@ elif [ -d "${QT_TARGET_CATALOG}/Qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${CO
   echo "export PATH=${QT_TARGET_CATALOG}/Qt/$(echo ${QT_VERSION} | cut -d "." -f -2)/${COMPILER}/bin:$PATH" > ${ENVFILE}
 fi
 
+echo Remove downloaded file
+rm -fv /qt-opensource-*.run
