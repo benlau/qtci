@@ -70,6 +70,14 @@ then
 APK=${ANDROID_BUILD_PATH}/build/outputs/apk/android-build-debug.apk
 fi
 
+APK2=${ANDROID_BUILD_PATH}/build/outputs/apk/debug/android-build-release-signed.apk
+
+if [ ! -f $APK2 ]
+then
+APK=${ANDROID_BUILD_PATH}/build/outputs/apk/debug/android-build-debug.apk
+fi
+
+
 echo "Output APK: $APK"
 
 if [ ! -z "$JARSIGNER" ]
