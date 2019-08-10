@@ -58,11 +58,6 @@ $QMAKE $PRO -r -spec android-g++
 ANDROID_BUILD_PATH=`pwd`/android-build
 
 JSON=`ls *deployment-settings.json`
-
-echo 'fix missong libc++_shared.so'
-mkdir  -pv ${ANDROID_BUILD_PATH}/libs/armeabi-v7a/
-cp -vf /android-ndk-r17c/sources/cxx-stl/llvm-libc++/libs/armeabi-v7a/libc++_shared.so android-build/libs/armeabi-v7a/
-
 make
 make install INSTALL_ROOT=${ANDROID_BUILD_PATH}
 
