@@ -25,7 +25,7 @@ Example:
 
     bash install-qt 5.9.4
 
-Enviroument variables
+Environment variables
 =====================
 
 QT_CI_PACKAGES - packages to install. You can check available packages if set VERBOSE to 1.
