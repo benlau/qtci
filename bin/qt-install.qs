@@ -225,4 +225,16 @@ Controller.prototype.DynamicTelemetryPluginFormCallback = function()
 Controller.prototype.StartMenuDirectoryPageCallback = function() {
     log("StartMenuDirectoryPageCallback");
     gui.clickButton(buttons.NextButton);
-};
+}
+
+// qt online installer 3.2.1: open source users must now accept the open
+// source obligations.
+// https://www.qt.io/blog/qt-online-installer-3.2.1-released
+Controller.prototype.ObligationsPageCallback = function()
+{
+    log("ObligationsPageCallback");
+    var page = gui.pageWidgetByObjectName("ObligationsPage");
+    page.obligationsAgreement.setChecked(true);
+    page.completeChanged();
+    gui.clickButton(buttons.NextButton);
+}
