@@ -3,23 +3,24 @@
 
 function usage() {
     echo "Usage:"
-    echo "install-qt-online \"packages\" output_path"
-    echo "Example"
-    echo "install-qt-online 'qt.qt5.5121.gcc_64' /opt/Qt"
+    echo "install-qt-online \"packages\" [output_path [qt_installer_version]]"
+    echo "Examples:"
+    echo "install-qt-online \"qt.qt5.5121.gcc_64\""
+    echo "install-qt-online \"qt.qt5.5121.gcc_64\" /opt/Qt"
+    echo "install-qt-online \"qt.qt5.5121.gcc_64\" /opt/Qt latest"
+    echo "install-qt-online \"qt.qt5.5121.gcc_64\" /opt/Qt 3.1.1"
     exit -1
 }
 
-if [ $# -lt 2 ]
+if [ $# -lt 1 ]
 then
 	usage
 fi
 
 export QT_CI_PACKAGES=${1}
 QT_TARGET_CATALOG=${2:-$PWD}
+INSTALLER_VERSION=${3:-latest} # lastest or a version triplet, e.g. 3.1.1
 QT_CI_DOWNLOADER=${QT_CI_DOWNLOADER:-"wget -c -N"}
-INSTALLER_VERSION=latest
-# or a triplet like
-#INSTALLER_VERSION=3.0.6
 
 if [ "$(uname)" = "Darwin" ]; then
   if [ "${INSTALLER_VERSION}" = "latest" ]; then
@@ -48,12 +49,14 @@ ${QT_CI_DOWNLOADER} ${DOWNLOAD_URL} || exit 1
 echo Installing Qt
 
 if [ "$(uname)" = "Darwin" ]; then
-  INSTALLER_NAME=${INSTALLER%.*}
-  APPFILE=/Volumes/${INSTALLER_NAME}/${INSTALLER_NAME}.app/Contents/MacOS/${INSTALLER_NAME}
-  hdiutil attach ${PWD}/${INSTALLER}
-  extract-qt-installer $APPFILE ${QT_TARGET_CATALOG}/Qt
-  hdiutil detach /Volumes/${INSTALLER_NAME}
+  hdiutil attach ${PWD}/${INSTALLER} -plist > minfo.plist
+  MOUNTPOINT=$(/usr/libexec/PlistBuddy -c "Print :system-entities:0:mount-point" minfo.plist || \
+               /usr/libexec/PlistBuddy -c "Print :system-entities:1:mount-point" minfo.plist || \
+               /usr/libexec/PlistBuddy -c "Print :system-entities:2:mount-point" minfo.plist)
+  INSTALLER_NAME=$(basename "${MOUNTPOINT}")
+  APPFILE="${MOUNTPOINT}"/${INSTALLER_NAME}.app/Contents/MacOS/${INSTALLER_NAME}
+  extract-qt-installer "$APPFILE" "${QT_TARGET_CATALOG}/Qt"
+  hdiutil detach "${MOUNTPOINT}"
 elif [ "$(uname)" = "Linux" ]; then
-  extract-qt-installer ${PWD}/${INSTALLER} ${QT_TARGET_CATALOG}/Qt
+  extract-qt-installer ${PWD}/${INSTALLER} "${QT_TARGET_CATALOG}/Qt"
 fi
-
