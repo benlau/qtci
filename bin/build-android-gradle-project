@@ -15,6 +15,8 @@ JARSIGNER=`which jarsigner`
 
 PRO=$1
 
+SPEC="${SPEC:-android-g++}"
+
 if [ -z "$QMAKE"]
 then
 
@@ -53,7 +55,7 @@ then
 fi
 
 set -v
-$QMAKE $PRO -r -spec android-g++
+$QMAKE $PRO -r -spec $SPEC
 
 ANDROID_BUILD_PATH=`pwd`/android-build
 
