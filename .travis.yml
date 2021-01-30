@@ -9,6 +9,7 @@ matrix:
         - cat /etc/apt/sources.list
         - sudo apt-get update
         - sudo apt-get install --force-yes -qq p7zip openjdk-7-jdk ant lib32z1-dev lib32stdc++6  #lib32* are needed by Android SDK
+        - sudo apt-get install libxkbcommon-x11-0  # qt installers 2/2020
         - sudo update-alternatives --display java
         - sudo update-alternatives --set java /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
         - sh -e /etc/init.d/xvfb start
@@ -28,12 +29,24 @@ matrix:
         - qmake
         - make install INSTALL_ROOT=$WORKDIR/build
         - androiddeployqt --output $WORKDIR/build
+  - os: windows
+    language: shell
+    install:
+      wget -nv -c https://download.qt.io/archive/qt/5.12/5.12.5/qt-opensource-windows-x86-5.12.5.exe
+    script:
+      ./qt-opensource-windows-x86-5.12.5.exe --verbose --script bin/qt-install.qs QTCI_OUTPUT=${PWD}/Qt QTCI_PACKAGES=qt.qt5.5125.win32_msvc2017 && ${PWD}/Qt/5.12.5/msvc2017/bin/qmake -version && test "$(${PWD}/Qt/5.12.5/msvc2017/bin/qmake -query QT_VERSION)" = "5.12.5"
+  - os: windows
+    language: shell
+    install:
+      wget -nv -c http://download.qt.io/official_releases/online_installers/qt-unified-windows-x86-online.exe
+    script:
+      ./qt-unified-windows-x86-online.exe --verbose --script bin/qt-install.qs QTCI_OUTPUT=${PWD}/Qt QTCI_PACKAGES=qt.qt5.5125.win32_msvc2017 && ${PWD}/Qt/5.12.5/msvc2017/bin/qmake -version && test "$(${PWD}/Qt/5.12.5/msvc2017/bin/qmake -query QT_VERSION)" = "5.12.5"
   - os: osx
     script: 
       - QT_CI_PACKAGES=qt.qt5.598.clang_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.9.8 && source qt-5.9.8.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.9.8"
   - os: osx
     script: 
-      - QT_CI_PACKAGES=qt.qt5.5124.clang_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.4 && source qt-5.12.4.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.4"
+      - QT_CI_PACKAGES=qt.qt5.5125.clang_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.5 && source qt-5.12.5.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.5"
   - script:
     - QT_CI_PACKAGES=qt.56.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.6.0 && source qt-5.6.0.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.6.0"
   - script:
@@ -72,3 +85,5 @@ matrix:
     - QT_CI_PACKAGES=qt.qt5.5123.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.3 && source qt-5.12.3.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.3"
   - script:
     - QT_CI_PACKAGES=qt.qt5.5124.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.4 && source qt-5.12.4.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.4"
+  - script:
+    - QT_CI_PACKAGES=qt.qt5.5125.gcc_64 PATH=${TRAVIS_BUILD_DIR}/recipes:${TRAVIS_BUILD_DIR}/bin:${PATH} install-qt 5.12.5 && source qt-5.12.5.env && qmake -version && test "$(qmake -query QT_VERSION)" = "5.12.5"
