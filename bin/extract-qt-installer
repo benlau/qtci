@@ -186,6 +186,18 @@ Controller.prototype.CredentialsPageCallback = function() {
     gui.clickButton(buttons.CommitButton);
 }
 
+Controller.prototype.ObligationsPageCallback = function() {
+    var page = gui.pageWidgetByObjectName("ObligationsPage");
+    page.obligationsAgreement.setChecked(true);
+    page.completeChanged();
+    gui.clickButton(buttons.NextButton);
+}
+
+Controller.prototype.StartMenuDirectoryPageCallback = function() {
+    console.log("qs:StartMenuDirectoryPageCallback");
+    gui.clickButton(buttons.NextButton);
+}
+
 Controller.prototype.ComponentSelectionPageCallback = function() {
     log("ComponentSelectionPageCallback");
 
